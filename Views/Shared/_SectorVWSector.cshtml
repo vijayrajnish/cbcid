@@ -1,0 +1,115 @@
+﻿@model CBCID_APPLICATION.Models.SectorWiseNotification;
+@using CBCID_APPLICATION.Models
+@{
+    var SectorLst = (List<CBCID_APPLICATION.Models.SectorWiseNotification>)ViewBag.SLst;
+    int i = 1;
+}
+<div style="overflow: scroll;">
+    <div class="col-12 col-sm-12 p-3">
+        <div class="row">
+            <h5><b>कृपया सुनवाई की  अग्रिम  तिथि भरना  सुनिश्चित   करे  </b></h5>
+        </div>
+        <div class="row">
+            <div class="col-12 p-0">
+                <div>
+                    <div class="table-responsive w-100">
+                        <table id="notificationTable" class="product-table m-t-30 table table-bordered" border="1" cellspacing="2" width="100%">
+                            <thead class="table-head-border bg-warning  text-center">
+                                <tr>
+                                    <th>क्र० सं० </th>
+                                    <th>खण्ड </th>
+                                    <th>जनपद </th>
+                                    <th>थाना</th>
+                                    <th>सी बी सं०</th>
+                                    <th>मु० अ० सं०</th>
+                                    <th>धारा </th>
+                                    <th>न्याया० का नाम /  सी एन आर </th>
+                                    <th>आरोप पत्र विरचन की तिथि  </th>
+                                </tr>
+                            </thead>
+                            @if (SectorLst != null && SectorLst.Count > 0)
+                            {
+                                int srno = 1;
+                                <tbody>
+                                    @foreach (var hd in SectorLst)
+                                    {
+                                        <tr>
+                                            <td>@srno</td>
+                                            <td>@(hd.SECTOR != null ? hd.SECTOR.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td>@(hd.DISTRICT != null ? hd.DISTRICT.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td>@(hd.Thana != null ? hd.Thana.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td><a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(hd.DCFCID.ToString())">@(hd.CBCID_NO != null ? hd.CBCID_NO.ToUpper() : "उपलब्ध नहीं")</a></td>
+                                            <td>@(hd.APRADHNO != null ? hd.APRADHNO.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td>@(hd.ACT != null ? hd.ACT.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td>@(hd.Court != null ? hd.Court.ToUpper() : "उपलब्ध नहीं")</td>
+                                            <td>@(hd.NEXTHEARINGDATE != null ? hd.NEXTHEARINGDATE.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं")</td>
+                                        </tr>
+                                        srno++;
+                                    }
+                                </tbody>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+<script>
+    $(document).ready(function () {
+        $('#notificationTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "emptyTable": "कोई डेटा उपलब्ध नहीं है",
+                "zeroRecords": "कोई रिकॉर्ड नहीं मिला",
+                "infoEmpty": "कोई जानकारी उपलब्ध नहीं है",
+                "infoFiltered": "(कुल _MAX_ रिकॉर्ड से फ़िल्टर किया गया)"
+            }
+        });
+        function sortTable(n) {
+          var table = document.getElementById("notificationTable");
+          var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+          switching = true;
+          dir = "asc";
+          while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+              shouldSwitch = false;
+              x = rows[i].getElementsByTagName("TD")[n];
+              y = rows[i + 1].getElementsByTagName("TD")[n];
+              if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                  shouldSwitch = true;
+                  break;
+                }
+              } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                  shouldSwitch = true;
+                  break;
+                }
+              }
+            }
+            if (shouldSwitch) {
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              switching = true;
+              switchcount++;
+            } else {
+              if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+              }
+            }
+          }
+        }
+    });
+</script>
+
+

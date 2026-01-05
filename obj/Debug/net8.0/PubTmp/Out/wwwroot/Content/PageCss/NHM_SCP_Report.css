@@ -1,0 +1,185 @@
+﻿.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 5px;
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 550px;
+}
+
+.table-scroll table thead tr th {
+    background: #fff;
+    position: sticky;
+    z-index: 1;
+    box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+}
+
+.table-scroll table thead tr:nth-child(1) th {
+    top: 0;
+}
+
+.table-scroll table thead tr:nth-child(2) th {
+    top: 28.5px;
+}
+
+.table-scroll table thead tr:nth-child(3) th {
+    top: 57.5px;
+}
+
+/*   #######################  For table head Horizontal Scroll  ##########################     */
+
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(1) {
+    left: 0;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(2) {
+    left: 40.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(3) {
+    left: 290.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(4) {
+    left: 390.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(5) {
+    left: 640.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(1) th:nth-child(6) {
+    left: 890.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(3) th:nth-child(1) {
+    left: 890.36px;
+    z-index: 2;
+}
+
+.table-scroll table thead tr:nth-child(3) th:nth-child(2) {
+    left: 913.32px;
+    z-index: 2;
+}
+
+/*   #######################  For Table Body Horizontal Scroll  ##########################     */
+
+.table-scroll table tbody tr td:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.table-scroll table tbody tr td:nth-child(2) {
+    position: sticky;
+    left: 40.36px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.table-scroll table tbody tr td:nth-child(3) {
+    position: sticky;
+    left: 290.36px;
+    z-index: 1;
+    background-color: #fff;
+    text-align: center;
+}
+
+.table-scroll table tbody tr td:nth-child(4) {
+    position: sticky;
+    left: 390.36px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.table-scroll table tbody tr td:nth-child(5) {
+    position: sticky;
+    left: 641px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.table-scroll table tbody tr td:nth-child(6) {
+    position: sticky;
+    left: 891px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.table-scroll table tbody tr td:nth-child(7) {
+    position: sticky;
+    left: 913.56px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+/*   #######################  For multiple device Vertical Scroll  ##########################     */
+
+
+@media only screen and (min-width: 1440px) {
+
+    .table-scroll table thead tr:nth-child(1) th {
+        top: 0px;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 28.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 57.5px;
+    }
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+
+    .table-scroll table thead tr:nth-child(1) th {
+        top: 0;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 28.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 57.5px;
+    }
+}
+
+.table-scroll table thead tr th {
+    background-color: #dbf3ff !important;
+    border: 1px solid #d7e1ed;
+}
+
+
+/******************* Table Heading CSS****************************/
+.text-center.vertical-align-middle.p1 {
+    background: rgb(175 232 189) !important;
+}
+
+.text-center.vertical-align-middle.p2 {
+    background-color: rgb(157 232 227) !important;
+}
+
+.text-center.vertical-align-middle.p3 {
+    background-color: rgb(255 228 196) !important;
+}
+
+.text-center.vertical-align-middle.p4 {
+    background-color: rgb(255 206 225) !important;
+}
+/******************* Table Heading CSS****************************/

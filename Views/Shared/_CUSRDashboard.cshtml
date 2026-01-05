@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CBCID_APPLICATION</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    
+    <link rel="stylesheet" href="~/CBCID_APPLICATION.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @* <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"> *@
+ 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/mystyle.css">
+    <!-- Bootstrap Css -->
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+    <script type="text/javascript" language="javascript">
+        function DisableBackButton() {
+         window.history.forward()
+        }
+        DisableBackButton();
+         window.onload = DisableBackButton;
+         window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+          window.onunload = function() { void (0) }
+    </script>
+
+
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <!-- partial -->
+        <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            @* <span class="navbar-toggler-icon"></span> *@
+            <i class="fa fa-bars text-white" aria-hidden="true"></i>
+        </button>
+        <div class="container-fluid page-body-wrapper">
+            
+            <nav class="sidebar sidebar-offcanvas " id="sidebar">
+                <div class="navbar-brand-wrapper d-flex align-items-center justify-content-center text-center pt-3">
+                    <a class="navbar-brandx brand-logox text-white TEXT-CENTER" href="dashboard.aspx"><h3><strong>CBCID</strong></h3></a>
+
+                </div>
+                <div class="user-profile">
+                    <div class="user-image">
+                        <img src="~/content/images/uplogo.png">
+                    </div>
+                    <div class="user-name">
+                        
+                       
+                    </div>
+                    <div class="user-designation">
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Dashboard/VCUSER">
+                            <i class="fa fa-2x fa-home mr-2"></i>
+                            <span class="menu-title">Dashboard</span>
+                            <span></span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                            <i class="fa fa-2x fa-exchange mr-2"></i>
+                            <span class="menu-title">Reports</span>
+
+                        </a>
+                        <div class="collapse" id="auth">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="#">प्रारूप -1 (क)</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Password/UpdatePassword">
+                            <i class="fa fa-2x fa-sign-out mr-2"></i>
+                            <span class="menu-title">Change Password</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Home/Index">
+                            <i class="fa fa-2x fa-sign-out mr-2"></i>
+                            <span class="menu-title">Logout</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <div class="container-fluid xpage-body-wrapper mt-50">
+                <div class="col-sm-12 mb-4 mb-xl-0  text-center pt-3  mb-3 bg-light">
+                    <h4 class="font-weight-bold text-brown text-center">Criminal Investigation Department (CID) e-Reporting Portal Dashboard </h4>
+                    <p class="pull-right  bg-warning pl-2"></p>
+                    <p class="font-weight-normal mb-4 text-white bg-brown p-0">
+
+                        <span class="font-weight-bold"><span class="text-white"></span> &nbsp;</span>
+
+                    </p>
+                </div>
+                <!-- partial -->
+                @RenderBody()
+            </div>
+        </div>
+        <!-- partial:footer -->
+        <footer class="footer">
+            <div class="text-center">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"><strong>Powered by <a href="https://tispl.net.in/" target="_blank"><img style="max-width:45px;" src="~/images/footer-logo.png" /> TRINETRADHAR INFO SOLUTION PVT. LTD</a></strong></span>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+
+
+
+    <script src="~/dash/vendors/base/vendor.bundle.base.js"></script>
+    <script src="~/Content/assets/js/vendor.bundle.js"></script>
+    <script src="~/Content/assets/js/app.bundle.js"></script>
+    <script src="~/Scripts/Custom.js"></script>
+
+    <script>
+        $(document)
+            .ajaxStart(function () {
+                $('#AjaxLoader').show();
+            })
+            .ajaxStop(function () {
+                $('#AjaxLoader').hide();
+            });
+    </script>
+
+
+    <script>
+        const container = document.getElementById("productsTable");
+
+
+        function scrollLeft() {
+            container.scrollBy({ right: -400, behavior: "smooth" });
+        }
+
+        function scrollRight() {
+            container.scrollBy({ left: 1800, behavior: "smooth" });
+        }
+    </script>
+
+   
+
+
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

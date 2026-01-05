@@ -1,0 +1,49 @@
+﻿@model CBCID_APPLICATION.Models.INVEST_OFFICER;
+@using CBCID_APPLICATION.Models
+@{
+    
+}
+<div style="overflow: scroll;">
+    <div class="col-12 col-sm-12 p-3">
+        <div class="row">
+            <h5><b>संबंधित अपराधों का विवरण </b></h5>
+            @Html.HiddenFor(x => x.DCFCID)
+        </div>
+        
+    </div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label>Officer Name</label> <span class="text-danger h2">*</span>
+                    @Html.TextBoxFor(x => x.OFFICER_NAME, new { message = "Officer Name", @class = "form-control" }) 
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                   
+                    <label>from Date</label> <span class="text-danger h2">*</span>
+                    @Html.TextBoxFor(x => x.FROMDATE, new { message = "fromdate", @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    @* <label>ग्राम/खण्ड संख्या/प्लॉट संख्या/सेक्टर</label> <span class="text-danger h2">*</span>
+                    @Html.TextBoxFor(x => x.Gram_Plot_Sector, new { message = "ग्राम/खण्ड संख्या/प्लॉट संख्या/सेक्टर अनिवार्य है", @class = "form-control clsalphanumeric", @rows = "6", @maxlength = "500" }) *@
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    @* @Html.Label("गाटा संख्या") <span class="text-danger h2">*</span>
+                    @Html.TextBoxFor(x => x.GataNumber, new { message = "गाटा संख्या अनिवार्य है", @class = "form-control" }) *@
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    @* <label>क्षेत्रफल (हेक्टेयर)</label> <span class="text-danger h2">*</span>
+                    @Html.TextBoxFor(x => x.AreaInHect, new { message = "क्षेत्रफल (हेक्टेयर) अनिवार्य है", @class = "form-control" }) *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

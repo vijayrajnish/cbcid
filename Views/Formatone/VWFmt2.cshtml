@@ -1,0 +1,197 @@
+﻿@model CBCID_APPLICATION.Models.DET_CRIME_FEMALE_CHILDREN;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.VW_DET_CRIME_FEM_CHILD> RST = ViewBag.FmtLst;
+    int i = 1;
+}
+
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        
+        <h4 class="page-title text-bold"><strong>महिलाओं तथा बच्चों से संबंधित अपराधों का विवरण  </strong></h4>
+    </div>
+    <div class="col-md-2 text-right p-b-20 pb-3">
+        <a class="btn btn-outline-warning " asp-action="FmtInsertUpdate" asp-controller="Formatone">Create New &nbsp;<i class="fa fa-plus"></i></a>
+    </div>
+
+
+</div>
+<div class="container-fluid">
+<form asp-action="VWFmt" asp-controller="Formatone" method="get">
+
+        <div class="col-md-12 text-right p-b-20">
+            @* <input type="hidden" value="@ViewBag.mafiaregid" id="Mafiaid"
+                   name="Mafiaid" /> *@
+        </div>
+     
+        <div class="card card-primary bg-primary-gradient">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> सी बी सं० </label>
+                            <input class="form-control" type="text" name="SCBCID" id="SCBCID" placeholder="सी बी सं०" value="" />
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label> मु० अ० सं० </label>
+                            <input class="form-control" type="text" name="SApradhNo" id="WadhNo" placeholder="मु० अ० सं०" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-12">
+                        <button class="btn btn-primary btn-md pull-right" type="submit"><i class="fa fa-search"></i> खोजें</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12 text-center m-b-0">
+        <div class="card p-3">
+        <div class="table-responsive  m-b-0">
+            <table id="productsTable" class="table text-center table-head-bg-dark table-light table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word;">
+                <thead>
+
+                    <tr class="text-center text-bold bg-tr">
+                        <th class="bg-tr" align="center" rowspan='2'>क्र० सं० </th>
+                        <th align="center" rowspan='2'>
+                            खण्ड
+                        </th>
+                        <th align="center" rowspan='2'>जनपद </th>
+                        <th align="center" rowspan='2'>सी बी सं० </th>
+                        <th align="center" rowspan='2'>मु० अ० सं० </th>
+                        <th align="center" rowspan='2' style="width:175px;">धारा </th>
+                        <th align="center" rowspan='2'>थाना  </th>
+                        <th align="center" rowspan='2'>बनाम </th>
+                        <th align="center" rowspan='2' style="width:150px;">न्याया० का नाम /  सी एन आर  </th>
+                        <th align="center" rowspan='2'>आरोप पत्र दाखिल करने की तिथि </th>
+                        <th align="center" rowspan='2'>आरोप पत्र विरचन की तिथि </th>
+                        <th align="center" rowspan='2'>परीक्षित साक्षियों का नाम  </th>
+                        <th align="center" rowspan='2'>शेष साक्षियों का नाम  </th>
+                        <th align="center" rowspan='2'>अद्यतन स्थिति   </th>
+                        <th align="center" rowspan='2'>अग्रिम नियत तिथि   </th>
+                        <th align="center" rowspan='2'>अभ्युक्ति    </th>
+                        <th></th>
+                        <th align="center" rowspan='2'>Action    </th>
+                    </tr>
+                    <tr></tr>
+
+
+                    @foreach (var RS in RST)
+                    {
+                        <tr>
+                            <td align="center">@i</td>
+                            <td align="center">@RS.Sname</td>
+                            <td align="center">@RS.dname</td>
+                            <td align="center">@RS.cbcidno</td>
+                            <td align="center">@RS.APRADHNO</td>
+                            <td align="center">@RS.ACT</td>
+                            <td align="center">@RS.THANA</td>
+                            <td align="center">@RS.BNAME</td>
+                            <td align="center">@RS.COURT</td>
+                            <td align="center">@RS.DAKILDATE</td>
+                            <td align="center">@RS.ARROPVICHARANTHITHI</td>
+                            <td align="center">@RS.PSHAKSHI_NAME</td>
+                            <td align="center">@RS.RSHAKSHI_NAME</td>
+                            <td align="center">@RS.ADATHAN_STATUS</td>
+                            <td align="center">@RS.NEXT_HEARING_DATE</td>
+                            <td align="center">@RS.ABHIYUKT</td>
+                                <td>
+                                    @if (RS.DCFCID != 0)
+                                    {
+                                        <ul class="nav nav-pills nav-primary ico-size">
+                                            @if (RS.DCFCID > 0)
+                                            {
+                                                <li>
+                                                    <a href="#" class="clsview" encid="@RS.DCFCID" data-toggle="modal" class="nav-link">View</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </td>
+                            <td align="center">
+
+                                    @if (@RS.DCFCID != 0)
+                                        {
+                                        <a href="/Formatone/FmtInsertUpdate?DCFCID=@(RS.DCFCID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                        }
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalLabel">माफिया के ऊपर दायर वादों का विवरण   </h5>
+                </div>
+                <div class="modal-body" id="idModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='closeModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var id = $(this).attr("encid");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchFormatone",
+                    data: { 'encid': id },
+                    success: function (response) {
+                        
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+
+}
+
+

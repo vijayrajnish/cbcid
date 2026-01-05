@@ -1,0 +1,172 @@
+﻿.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 5px;
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 550px;
+}
+
+    .table-scroll table thead tr:nth-child(2) th {
+        background: #fff;
+        position: sticky;
+        top: 100px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table thead tr:nth-child(1) th {
+        background: #fff;
+        position: sticky;
+        top: 0px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+        padding: 5px;
+    }
+    .table-scroll table thead tr:nth-child(3) th {
+        background: #fff;
+        position: sticky;
+        top: 56px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table thead tr:nth-child(4) th {
+        background: #fff;
+        position: sticky;
+        top: 82px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        background: #fff;
+        position: sticky;
+        top: 187px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table thead tr:nth-child(6) th {
+        background: #fff;
+        position: sticky;
+        top: 136px;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+
+        .table-scroll table thead tr:nth-child(1) th:nth-child(1), .table-scroll table thead tr:nth-child(6) th:nth-child(1) {
+            background: #fff;
+            position: sticky;
+            left: 0;
+            top: 0;
+            z-index: 2;
+        }
+
+        .table-scroll table thead tr:nth-child(1) th:nth-child(2), .table-scroll table thead tr:nth-child(6) th:nth-child(2) {
+            background: #fff;
+            position: sticky;
+            left: 60px;
+            top: 0;
+            z-index: 2;
+            box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+        }
+
+    .table-scroll table tbody tr td:nth-child(1) {
+        background: #fff;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table tbody tr td:nth-child(2) {
+        background: #fff;
+        position: sticky;
+        left: 60px;
+        z-index: 2;
+        box-shadow: 0 1px 2px 0 rgb(32 33 36 / 28%);
+    }
+
+    .table-scroll table thead tr:nth-child(1) th:nth-child(1), .table-scroll table thead tr:nth-child(1) th:nth-child(2), .table-scroll table thead tr:nth-child(6) th:nth-child(1), .table-scroll table thead tr:nth-child(6) th:nth-child(2) {
+        z-index: 5;
+    }
+
+    .table-scroll table thead tr:nth-child(1) th:nth-child(11), .table-scroll table thead tr:nth-child(1) th:nth-child(12) {
+        top: 100px;
+        z-index: 1;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th:nth-child(1), .table-scroll table thead tr:nth-child(3) th:nth-child(2) {
+        top: 129px;
+        z-index: 1;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th:nth-child(1), .table-scroll table thead tr:nth-child(4) th:nth-child(2) {
+        top: 158px;
+        z-index: 1;
+    }
+
+
+@media only screen and (min-width: 1024px) {
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 117px;
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        top: 212px;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th:nth-child(1), .table-scroll table thead tr:nth-child(4) th:nth-child(2) {
+        top: 178px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th:nth-child(1), .table-scroll table thead tr:nth-child(3) th:nth-child(2) {
+        top: 146px;
+    }
+}
+
+@media only screen and (min-width: 1366px) {
+
+    .table-scroll table thead tr:nth-child(1) th:nth-child(2), .table-scroll table thead tr:nth-child(6) th:nth-child(2) {
+        left: 58px;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th{
+        top:118px;
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        top: 211px;
+    }
+    .table-scroll table thead tr:nth-child(4) th:nth-child(1), .table-scroll table thead tr:nth-child(4) th:nth-child(2) {
+        top: 178px;
+    }
+    .table-scroll table thead tr:nth-child(3) th:nth-child(1), .table-scroll table thead tr:nth-child(3) th:nth-child(2){
+        top:147px;
+    }
+}
+
+
+@media only screen and (min-width: 1440px) {
+
+   
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 117px;
+    }
+    .table-scroll table thead tr:nth-child(3) th:nth-child(1), .table-scroll table thead tr:nth-child(3) th:nth-child(2){
+        top:147px;
+    }
+    .table-scroll table thead tr:nth-child(4) th:nth-child(1), .table-scroll table thead tr:nth-child(4) th:nth-child(2){
+        top:180px;
+    }
+    .table-scroll table thead tr:nth-child(5) th {
+        top: 212px;
+    }
+}

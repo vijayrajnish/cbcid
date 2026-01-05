@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CID_APPLICATION</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CBCID_APPLICATION.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" language="javascript">
+        function DisableBackButton() {
+         window.history.forward()
+        }
+        DisableBackButton();
+         window.onload = DisableBackButton;
+         window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+          window.onunload = function() { void (0) }
+    </script>
+    <style>
+
+        .bgimg {
+            background-image: url(../images/imagemafia.png);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .input-group-text {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem .8rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: center;
+            white-space: nowrap;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 1.25rem;
+            top: 10;
+            position: relative;
+            top: 9px;
+            left: -14px;
+            z-index: 999;
+        }
+
+        footer.login {
+            background-color: aliceblue;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+            margin: auto;
+            padding: 10px;
+        }
+
+    </style>
+
+</head>
+<body class="bgimg">
+    @*  <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+           Paste Your Header
+        </nav>
+    </header> *@
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer login">
+        <div class="">
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"><strong>Designed & Developed by <a href="https://tispl.net.in/" target="_blank"><img style="max-width:45px;" src="~/images/footer-logo.png" /> TRINETRADHAR INFO SOLUTION PVT. LTD</a></strong></span>
+        </div>
+    </footer>
+   @*  <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - CBCID_APPLICATION - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>  *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

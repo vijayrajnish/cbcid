@@ -1,0 +1,83 @@
+﻿@model CBCID_APPLICATION.Models.OFFICERMASTER
+@{
+    ViewData["Title"] = "Add Officer";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Formatone/VWFmt"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">Add New Investigation Officer</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTOFFICERMASTER" asp-controller="INVESTOFF" method="post">
+        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATEINVEST" />
+                <input type="hidden" asp-for="INVESTIGATION_OFFICER_ID" asp-action="INSERTUPDATEINVEST" />
+            </div> *@
+
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>जांच अधिकारी</label>
+                        <input asp-for="OFF_NAME" type="text" class="form-control"  placeholder="OFFICER_NAME" /> 
+                        <span asp-validation-for="OFF_NAME" class="text-danger"></span>
+
+                    </div>
+                </div>
+                </div>
+
+           
+            <div class="row">
+                <div class="form-group text-center">
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+    </form>
+        </div>
+    
+
+
+@section Scripts {
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <script>
+
+        $(document).ready(function () {
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            if(stat=="1")
+            {
+                alert('Officer Added Successfully.');
+                window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            if(stat=="2")
+            {
+                alert('Officer Updated Successfully');
+                window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            });
+
+
+          
+
+            $(document).on("click", "#btnsubmit", function () {
+                var offname=$("#OFF_NAME").val();
+                if(offname=="")
+                {
+                    alert('Enter Officer Name');
+                    return false;
+                }
+                
+           });
+        });
+    </script>
+
+}
+

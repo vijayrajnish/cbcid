@@ -1,0 +1,168 @@
+﻿@model CBCID_APPLICATION.Models.CaseHearing
+@{
+    ViewData["Title"] = "SUNVAHI";
+    Layout = "~/Views/Shared/_CUSRDashboard.cshtml";
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Formatone/CUSRVWFmt"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">सुनवाई का पंजीकरण</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATESUNVAHICIS" asp-controller="Sunvahi" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATESUNVAHICIS" />
+                <input type="hidden" asp-for="HearingID" asp-action="INSERTUPDATESUNVAHICIS" />
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>सी बी संख्या</label>
+                        <input asp-for="CBCID" type="text" class="form-control" readonly="readonly" placeholder="CBCID NO" />
+                        <span asp-validation-for="CBCID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>मु० अ० सं०</label>
+                        <input asp-for="APRADHNO" type="text" class="form-control" readonly="readonly" placeholder="APRADHNO" />
+                        <span asp-validation-for="APRADHNO" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> बनाम(अपराधी का नाम)  </label>
+                        <input asp-for="Bname" type="text" class="form-control" readonly="readonly" placeholder="Bname" />
+                        <span asp-validation-for="Bname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> PROCECUTOR  </label>
+                        <input asp-for="Prosecutor" type="text" class="form-control" placeholder="Prosecutor" />
+                        <span asp-validation-for="Prosecutor" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> Mobile  </label>
+                        <input asp-for="Mobile" type="text" class="form-control" placeholder="Mobile" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> सुनवाई की पिछली तिथि </label>
+                        <input asp-for="HearingDate" type="date" class="form-control datepicker" placeholder="FRMDATE (ex. DD/MM/YYYY)" />
+                        <span asp-validation-for="HearingDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> सुनवाई की अग्रिम नियत तिथि  </label>
+                        <input asp-for="NextHearingDate" type="date" class="form-control datepicker" placeholder="FRMDATE (ex. DD/MM/YYYY)" />
+                        <span asp-validation-for="NextHearingDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> मुकदमे की स्थिति</label>
+                        <select asp-for="CaseStatusId" class="form-control" asp-items="@ViewBag.CaseStatusId">
+                            <option selected disabled>---चुनें---</option>
+                        </select>
+                        <span asp-validation-for="CaseStatusId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>अद्यतन स्थिति </label>
+                            <input asp-for="ADATHAN_STATUS" type="text" class="form-control" placeholder="अद्यतन स्थिति" />
+                            <span asp-validation-for="ADATHAN_STATUS" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सेव करें" class="btn btn-primary" />
+                </div>
+        </div>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            if(stat=="1")
+            {
+                alert('Recorded Successfully');
+                window.location.href = "/Formatone/CUSRVWFmt";
+                return false;
+            }
+            if(stat=="2")
+            {
+                alert('Recorded Updated Successfully');
+                window.location.href = "/Formatone/CUSRVWFmt";
+                return false;
+            }
+            });
+            $(document).on("click", "#btnsubmit", function () {
+
+
+                var secid=$("#SECTORID").val();
+                if(secid=="" || secid=="0")
+                {
+                    alert('Enter Sector');
+                    return false;
+                }
+                var did=$("#DISTRICTID").val();
+                if(did=="" || did=="0")
+                {
+                    alert('Enter District');
+                    return false;
+                }
+                var tid=$("#THANAID").val();
+                if(tid=="" || tid=="0")
+                {
+                    alert('Enter Thana');
+                    return false;
+                }
+                var cbno=$("#CBCID_NO").val();
+                if(cbno=="" || cbno=="0")
+                {
+                    alert('Enter CBCID NO.');
+                    return false;
+                }
+
+                var apdh=$("#APRADHNO").val();
+                if(apdh=="")
+                {
+                    alert('Enter Apradh NO.');
+                    return false;
+                }
+                var act=$("#ACT").val();
+                if(act=="")
+                {
+                    alert('Enter Act.');
+                    return false;
+                }
+           });
+        });
+    </script>
+
+}
+

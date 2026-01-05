@@ -1,0 +1,174 @@
+﻿@model CBCID_APPLICATION.Models.Gavaha
+@{
+    ViewData["Title"] = "INSERTUPDATEGAVAHA";
+    Layout = "~/Views/Shared/_CUSRDashboard.cshtml";
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Formatone/CUSRVWFmt"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">गवाह का पंजीकरण</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATEGAVAHACIS" asp-controller="AddGavaha" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATEGAVAHACIS" />
+                <input type="hidden" asp-for="GavahaId" asp-action="INSERTUPDATEGAVAHACIS" />
+            </div>
+            <div class="row">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> गवाह का  नाम  </label>
+                            <input asp-for="GavahaName" class="form-control" />
+                            <span asp-validation-for="GavahaName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> पता</label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> आधार संख्या</label>
+                            <input asp-for="AdharNo" class="form-control" />
+                            <span asp-validation-for="AdharNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>फोन नंबर</label>
+                            <input asp-for="Phoneno" class="form-control" />
+                            <span asp-validation-for="Phoneno" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> गवाही की परीक्षण स्थिति  </label>
+                            <select asp-for="Examined" class="form-control">
+                                <option selected disabled>---Select---</option>
+                                <option value="1">परीक्षित</option>
+                                <option value="0">अपरीक्षित</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> परीक्षण तिथि </label>
+                            <input asp-for="Examineddate" type="date" class="form-control datepicker" placeholder="FRMDATE (ex. DD/MM/YYYY)" />
+                            <span asp-validation-for="Examineddate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> गवाही की अग्रिम तिथि  </label>
+                            <input asp-for="GhavahiNextdate" type="date" class="form-control datepicker" placeholder="FRMDATE (ex. DD/MM/YYYY)" />
+                            <span asp-validation-for="GhavahiNextdate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> गवाही का प्रकार  </label>
+                            <select asp-for="GavaTypeId" class="form-control">
+                                <option selected disabled>---Select---</option>
+                                <option value="1">वीडियो कॉन्फ्रेंसिंग</option>
+                                <option value="2">न्यायालय में आकर</option>
+                                <option value="3">गवाह अनुपस्थित </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>  टिप्पणी  </label>
+                            <input asp-for="Remark" class="form-control" />
+                            <span asp-validation-for="Remark" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                @if (Model.DCFCID == 0)
+                {
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="Create Record" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सुरक्षित करें" class="btn btn-primary" />
+                }
+            </div>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            if(stat=="1")
+            {
+                alert('Recorded Successfully');
+                window.location.href = "/Formatone/CUSRVWFmt";
+                return false;
+            }
+            if(stat=="2")
+            {
+                alert('Recorded Updated Successfully');
+                window.location.href = "/Formatone/CUSRVWFmt";
+                return false;
+            }
+            });
+            $(document).on("click", "#btnsubmit", function () {
+
+
+                var gvname=$("#GavahaName").val();
+                if(gvname=="")
+                {
+                    alert('Enter Gavaha');
+                    return false;
+                }
+                var addres=$("#Address").val();
+                if(addres=="")
+                {
+                    alert('Enter Address');
+                    return false;
+                }
+                var exam=$("#Examined").val();
+                if(exam=="")
+                {
+                    alert('Enter examined');
+                    return false;
+                }
+
+                var act=$("#गवाही की परीक्षण स्थिति").val();
+                if(act=="")
+                {
+                    alert('Enter Act.');
+                    return false;
+                }
+           });
+        });
+    </script>
+
+}
+

@@ -1,0 +1,654 @@
+﻿@model CBCID_APPLICATION.Models.DET_CRIME_FEMALE_CHILDREN
+@{
+    ViewData["Title"] = "FmtInsertUpdate";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.Gavaha_Cnt> glst = ViewBag.GavahaCnt;
+    List<CBCID_APPLICATION.Models.AbhiyukCnt> AbhiLst = ViewBag.ABHILST;
+    List<CBCID_APPLICATION.Models.INVESTIGATION_OFFICER_CNT> INVESTLSTCNT = ViewBag.INVESTLSTCNT;
+}
+<div class="row">
+    <div class="col-md-12 text-center  pb-3">
+        <a class="btn btn-outline-warningg btn-info pull-left pb-2" href="~/Formatone/VWFmt"><i class="fa fa-arrow-left"></i></a>
+        <h4 class="page-title text-bold"><strong class="title-box">संबंधित अपराध का प्रकार/जाँच का विषय का पंजीकरण  </strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="FmtInsertUpdate" asp-controller="Formatone" method="post">
+        <div class="container-fluid">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DCFCID" />
+            <input type="hidden" asp-for="UPDATEDBY" />
+            <div class="row">
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> केस के स्थानांतरण का प्रकार <span class="red">*</span>    </label>
+                        <select asp-for="TransferFrm" class="form-control">
+                            <option selected disabled>---Select---</option>
+                            <option value="1">शासन</option>
+                            <option value="2">न्यायालय</option>
+                            <option value="3">एनएचआरसी</option>
+                            <option value="4">एसएचआर सी</option>
+                            <option value="5">एस सी एस टी आयोग</option>
+                            <option value="6">अन्य</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label>संबंधित अपराध का प्रकार/जाँच का विषय चुने<span class="red">*</span></label>
+                        <select asp-for="FMTID" class="form-control" asp-items="@ViewBag.FMTID">
+                            <option selected disabled>---चुने---</option>
+                        </select>
+                        <span asp-validation-for="FMTID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> खण्ड<span class="red">*</span> </label>
+                        <select asp-for="SECTORID" class="form-control" asp-items="@ViewBag.SECID">
+                            <option selected disabled>---Select Sector---</option>
+                        </select>
+                        <span asp-validation-for="SECTORID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> जनपद <span class="red">*</span></label>
+                        <select asp-for="DISTRICTID" class="form-control" asp-items="@ViewBag.Did">
+                            <option selected disabled>---Select District---</option>
+                            <option value="79">अन्य</option>
+                        </select>
+                        <span asp-validation-for="DISTRICTID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> सी बी सं०  </label>
+                        <input asp-for="CBCID_NO" class="form-control" maxlength="5" />
+                        
+                        <span id="errorMsg" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> सी० बी० सं० वर्ष </label>
+                        <select asp-for="YEAR" class="form-control" asp-items="@ViewBag.YEAR">
+                            <option selected disabled>---वर्ष ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> एस ० आई ० बी  सं० </label>
+                        <input asp-for="SIBNO" class="form-control" maxlength="5" />
+                        <span asp-validation-for="SIBNO" class="text-danger"></span>
+                        <span id="errorMsgSIBNO" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> एस ० आई ० बी  सं० वर्ष </label>
+                        <select asp-for="SIBNOYR" class="form-control" asp-items="@ViewBag.SBYEAR">
+                            <option selected disabled>---वर्ष ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> मु० अ० सं० </label>
+                        <input asp-for="APRADHNO" class="form-control" maxlength="5" />
+                        <span id="errorMsgAPRADHNO" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> मु० अ० सं० वर्ष<span class="red">*</span> </label>
+                        <select asp-for="APRADHYEAR" class="form-control" asp-items="@ViewBag.APYEAR">
+                            <option selected disabled>---वर्ष ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> धारा <span class="red">*</span> </label>
+                        <input asp-for="ACT" class="form-control" />
+                        <span asp-validation-for="ACT" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4">
+                    <div class="form-group">
+                        <label> थाना  <span class="red">*</span></label>
+                        <select asp-for="THANAID" class="form-control" asp-items="@ViewBag.THANAID">
+                            <option selected disabled>---Select Thana---</option>
+                        </select>
+                        <span asp-validation-for="THANAID" class="text-danger"></span>
+                    </div>
+                </div>
+                @if (Model.DCFCID == 0)
+                {
+                    <div class="col-12 text-center">
+                        <input type="submit" id="btnsubmit" name="btnsubmit" value="Partial Save" class="btn btn-warning w-25" />
+                    </div>
+                }
+                @if (Model.DCFCID > 0)
+                {
+                    <div class="col-12 col-md-12 mb-4">
+                        <hr />
+                    </div>
+                    <div class="row">
+                        @if (Model.DCFCID > 0)
+                        {
+                            <div class="col-lg-6  col-xxl-6">
+                                <div class="form-group">
+                                    <label class="d-block mb-2"> विवेचना अधिकारी <span class="red">*</span> </label>
+                                    <a href="/INVESTOFF/INSERTUPDATEINVEST?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-primary "><i class="fa fa-plus inline-block"></i> विवेचना अधिकारी जोड़ें </a>
+                                    <a href="/INVESTOFF/VWINVEST?DCFCID=@(Model.DCFCID.ToString())&INVESTIGATION_OFFICER_ID=0" class="btn btn-info  "><i class="fa fa-eye inline-block"></i> विवेचना अधिकारी देखें </a>
+                                    <div class="btn bg-dark text-white p-3 d-inline">
+                                        <label id="lblACnt">
+                                            <strong>विवेचना अधिकारी काउंट </strong>
+                                            <span class=" btn btn-danger text-white">@(INVESTLSTCNT != null && INVESTLSTCNT.Any() ? INVESTLSTCNT.First().INVEST_OFFICER_CNT : "0")</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6  col-xxl-6">
+                                <div class="form-group">
+                                    <label class="d-block mb-1"> अभियुक्त<span class="red">*</span>  </label>
+                                    <a href="/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-primary"><i class="fa fa-plus d-inline"></i> अभियुक्त जोड़ें </a>
+                                    <a href="/Abiyukth/VWsahaabiyuk?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-info "><i class="fa fa-eye d-inline"></i> अभियुक्त देखें </a>
+                                    <div class="btn bg-dark text-white p-3 d-inline">
+                                        <label id="lblACnt">
+                                            <strong>अभियुक्त काउंट </strong>
+                                            <span class=" btn btn-danger text-white">  @(AbhiLst != null && AbhiLst.Any() ? AbhiLst.First().AbhiyukTotCNT : "0")</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="col-lg-6  col-xxl-6">
+                                    <div class="form-group">
+                                        <label class="d-block mb-2"> साक्षी<span class="red">*</span>   </label>
+                                        <a href="/AddGavaha/INSERTUPDATEGAVAHA?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-primary "><i class="fa fa-plus inline-block"></i> साक्षी जोड़ें </a>
+                                        <a href="/AddGavaha/VWGAVAHA?DCFCID=@(Model.DCFCID.ToString())&gavahaid=0" class="btn btn-info"><i class="fa fa-eye inline-block"></i> साक्षी देखें </a>
+
+                                        <div class="btn bg-dark text-white p-3 d-inline">
+                                            <label id="lblSCnt">
+                                                <strong>साक्षी काउंट </strong>
+                                                <span class="form-groupx btn btn-danger text-white">  @(glst != null && glst.Any() ? glst.First().GAVAHACNT.ToString() : "0")</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                    <div class="col-12 col-md-12 mb-4">
+                        <hr />
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> न्याया० का नाम <span class="red">*</span>  </label>
+                            <select asp-for="COURTID" class="form-control" asp-items="@ViewBag.CRTID">
+                                <option selected disabled>---Select Court---</option>
+                            </select>
+                            <span asp-validation-for="COURTID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> सी एन आर<span class="red">*</span>  </label>
+                            <input asp-for="CNRNO" class="form-control" />
+                            <span asp-validation-for="CNRNO" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> यदि अभियुक्त सरकारी सेवक हो तो उसका विवरण     </label>
+                            <select asp-for="GOVTOFFICER" class="form-control">
+                                <option option value="0">---Select---</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group" id="pno" name="pno">
+                            <label> सरकारी सेवक का विवरण  </label>
+                            <input asp-for="PLNO" class="form-control" />
+                            <span asp-validation-for="PLNO" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> आरोप पत्र संख्या<span class="red">*</span> </label>
+                            <input asp-for="LETTERNO" class="form-control" />
+                            <span asp-validation-for="LETTERNO" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> आरोप पत्र दिनांक <span class="red">*</span>  </label>
+                            <input asp-for="LETTERDATE" type="text" autocomplete="off" class="form-control datepicker" readonly="readonly" placeholder="आरोप पत्र दिनांक"
+                            value="@Model.LETTERDATE?.ToString("dd-MM-yyyy")" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> आरोप पत्र न्यायलय में दाखिल करने की तिथि <span class="red">*</span>  </label>
+                            <input asp-for="DAKILDATE" type="text" autocomplete="off" class="form-control datepicker" readonly="readonly"
+                            placeholder="आरोप पत्र न्यायलय में दाखिल करने की तिथि"
+                            value="@Model.DAKILDATE?.ToString("dd-MM-yyyy")" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> आरोप पत्र प्रसंज्ञान की तिथि <span class="red">*</span>  </label>
+                            <input asp-for="ARROPVICHARANTHITHI" type="text" autocomplete="off" class="form-control datepicker" readonly="readonly" placeholder="आरोप पत्र प्रसंज्ञान की तिथि"
+                            value="@Model.ARROPVICHARANTHITHI?.ToString("dd-MM-yyyy")" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> न्यायालय में अभियोग की अद्यतन स्थिति <span class="red">*</span></label>
+                            <select asp-for="CaseStatusId" class="form-control" asp-items="@ViewBag.CaseStatusId">
+                                <option value="0">---चुनें---</option>
+                            </select>
+                            <span asp-validation-for="CaseStatusId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-12  col-xxl-4">
+                        <div class="form-group" id="ABID" name="ABID">
+                            <label> आदेश का दिनांक    </label>
+                            <input asp-for="FRMDATE" type="text" autocomplete="off" class="form-control datepicker" readonly="readonly" placeholder="आदेश का दिनांक"
+                            value="@Model.FRMDATE?.ToString("dd-MM-yyyy")" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xl-12 col-xxl-8">
+                        <div class="form-group">
+                            <label> टिप्पणी    </label>
+                            <input asp-for="ABHIYUKT" class="form-control" />
+                            <span asp-validation-for="ABHIYUKT" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @if (Model.DCFCID > 0)
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="d-block mb-2"> नियत तिथि   </label>
+                                        @if (Model.DCFCID > 0 && Model.PSAVE==1)
+                                        {
+                                            <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-outline-light text-primary ">
+                                                <strong class="nav-link text-danger">अप्डेट अग्रिम नियत तिथि </strong> 
+                                            </a>
+                                            <a href="/Sunvahi/VWSUNVAHI?DCFCID=@(Model.DCFCID.ToString())" class="text-primary d-inline  p-3">
+                                                <strong class="nav-linkz"><i class="fa fa-eye  fa-2x "></i> </strong>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" id="btnsubmit" name="btnsubmit" value="अप्डेट अग्रिम नियत तिथि " class="btn btn-primary" />
+                                            
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group text-center">
+                                @if (Model.DCFCID > 0)
+                                {
+                                    <input type="submit" id="btnsubmit" name="btnsubmit" value="Final Save" class="btn btn-primary" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1970:2035",
+            minDate: new Date(1970, 0, 1),
+            maxDate: new Date(2035, 0, 1)
+        });
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            var dfid=@ViewBag.dfid;
+            $("#ABID").hide();
+            $("#pno").hide();
+            var cid = $("#CaseStatusId").val();
+            if (cid === undefined || cid === null || cid === "") {
+                   $("#ABID").hide();
+            }
+            else
+            {
+                var caseid = parseInt($("#CaseStatusId").val());
+
+                if (caseid === 13) {
+
+                $("#ABID").show();
+            } else if (caseid !== 13) {
+
+                $("#ABID").hide();
+            }
+            }
+
+            var goff=$("#GOVTOFFICER").val();
+            if (goff === undefined || goff === null || goff === "" || goff === "2") {
+                   $("#pno").hide();
+            }
+            if(goff==1)
+            {
+                $("#pno").show();
+            }
+            if(stat=="1")
+            {
+                alert('Recorded Partially Saved');
+                window.location.href = "/Formatone/FmtInsertUpdate?DCFCID="+dfid;
+            }
+             if(stat=="18")
+            {
+
+                 window.location.href = "/Sunvahi/INSERTUPDATESUNVAHI?DCFCID="+dfid;
+            }
+            if(stat=="2")
+            {
+                alert('Recorded Updated succesfully');
+                window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            if(stat=="6")
+            {
+                alert('अभियुक्त,साक्षी,विवेचना अधिकारी,अप्डेट अग्रिम नियत तिथि का विवरण दर्ज करना अनिवार्य है |');
+                //window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            if(stat=="9")
+            {
+                alert('सी बी सं० पहले से मौजूद है,पुनः प्रयास करें');
+                window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            if(stat=="8")
+            {
+                alert('मु० अ० सं० पहले से मौजूद है,पुनः प्रयास करें');
+                 window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+            if(stat=="7")
+            {
+                alert('सी एन आर पहले से मौजूद है,पुनः प्रयास करें');
+                 window.location.href = "/Formatone/VWFmt";
+                return false;
+            }
+          });
+        $("#CBCID_NO").on('blur', function () {
+            const value = $(this).val().trim();
+            const pattern = /^(\d{4}|\d{4}[A-Za-z0-9])$/;
+            if (!pattern.test(value)) {
+                // alert('इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।');
+                $('#errorMsg').text("इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।");
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            } else {
+                $('#errorMsg').text('');
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+        $("#SIBNO").on('blur', function () {
+            const value = $(this).val().trim();
+            const pattern = /^(\d{4}|\d{4}[A-Za-z0-9])$/;
+            if (!pattern.test(value)) {
+                // alert('इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।');
+                $('#errorMsgSIBNO').text("इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।");
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            } else {
+                $('#errorMsgSIBNO').text('');
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+        $("#APRADHNO").on('blur', function () {
+            const value = $(this).val().trim();
+            const pattern = /^(\d{4}|\d{4}[A-Za-z0-9])$/;
+            if (!pattern.test(value)) {
+                // alert('इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।');
+                $('#errorMsgAPRADHNO').text("इनपुट 5 कैरेक्टर्स का होना चाहिए: पहले 4 अंक, फिर 1 अल्फ़ान्यूमेरिक।");
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            } else {
+                $('#errorMsgAPRADHNO').text('');
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            }
+        });
+
+            $(document).on("click", "#btnsubmit", function () {
+                var tfrm=$("#TransferFrm").val();
+                if(tfrm=="" || tfrm==null)
+                {
+                    alert('केस के स्थानांतरण का प्रकार');
+                    return false;
+                }
+                var fid=$("#FMTID").val();
+                if(fid=="" || fid==null)
+                {
+                    alert('संबंधित अपराध का प्रकार/जाँच का विषय चुने');
+                    return false;
+                }
+                var secid=$("#SECTORID").val();
+                if(secid=="" || secid==null)
+                {
+                    alert('खण्ड');
+                    return false;
+                }
+                var did=$("#DISTRICTID").val();
+                if(did=="" || did==null)
+                {
+                    alert('जनपद');
+                    return false;
+                }
+                var apdh=$("#APRADHNO").val();
+                if(apdh=="")
+                {
+                    alert('मु० अ० सं०');
+                    return false;
+                }
+                var apyr=$("#APRADHYEAR").val();
+                if(apyr=="" || apyr==null)
+                {
+                    alert('मु० अ० सं० वर्ष');
+                    return false;
+                }
+                var vact=$("#ACT").val();
+                if(vact=="")
+                {
+                    alert('धारा');
+                    return false;
+                }
+                var tid=$("#THANAID").val();
+                if(tid=="" || tid==null)
+                {
+                    alert('थाना');
+                    return false;
+                }
+                var did=parseInt($("#DCFCID").val());
+                var Crid=parseInt($("#COURTID").val());
+                if((Crid=="0" ||Crid=="" || Crid==null) && did>0)
+                {
+                    alert('न्याया० का नाम');
+                    return false;
+                }
+                var Crno=$("#CNRNO").val();
+                if(Crno=="" && did>0)
+                {
+                    alert('सी एन आर');
+                    return false;
+                }
+                var letno=$("#LETTERNO").val();
+                if(letno=="" && did>0)
+                {
+                    alert('आरोप पत्र संख्या');
+                    return false;
+                }
+
+                var dkdt=$("#DAKILDATE").val();
+                if(dkdt=="" && did>0)
+                {
+                    alert('आरोप पत्र न्यायलय में दाखिल करने की तिथि');
+                    return false;
+                }
+                var Aropdt=$("#ARROPVICHARANTHITHI").val();
+                if(Aropdt=="" && did>0)
+                {
+                    alert('आरोप पत्र प्रसंज्ञान की तिथि');
+                    return false;
+                }
+                var cstat=parseInt($("#CaseStatusId").val());
+                if(cstat=="" || cstat==null && did>0)
+                {
+                    alert('न्यायालय में अभियोग की अद्यतन स्थिति');
+                    return false;
+                }
+
+                var abhi=$("#ABHIYUKT").val();
+                if(abhi=="" || abhi==null && did>0)
+                {
+                    alert('टिप्पणी');
+                    return false;
+                }
+           });
+
+           $(".numeric").on("keypress", function (e) {
+            if (e.which != 8 && e.which != 0 &&
+                (e.which < 48 || e.which > 57)) {
+                e.preventDefault();
+            }
+        });
+        $("#CaseStatusId").on("change", function () {
+                var caseid = parseInt($(this).val());
+
+                if (caseid === 13) {
+
+                $("#ABID").show();
+            } else if (caseid !== 13) {
+
+                $("#ABID").hide();
+            }
+          });
+
+
+           $("#SECTORID").on("change", function () {
+            var ddldist = $("#DISTRICTID");
+            var districtid = $(this).val();
+            if (districtid == "") {
+                alert('Select the Sector');
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/FetchDistrict",
+                    data: ({ 'DistrictId': districtid }),
+                    success: function (response) {
+                        ddldist.empty().append('<option selected="selected" value="">Please select</option>');
+                        $.each(response, function () {
+                            ddldist.append($("<option></option>").val(this['districtId']).html(this['districtName']));
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+        });
+            $("#DISTRICTID").on("change", function () {
+            var ddlthana = $("#THANAID");
+            var districtid = $(this).val();
+            if (districtid == "") {
+                alert('Select the District');
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/FetchThana",
+                    data: ({ 'DistrictId': districtid }),
+                    success: function (response) {
+                        ddlthana.empty().append('<option selected="selected" value="">Please select</option>');
+                        $.each(response, function () {
+                            ddlthana.append($("<option></option>").val(this['thanaid']).html(this['thananame']));
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+        });
+          $("#GOVTOFFICER").on("change", function () {
+                var gid = parseInt($("#GOVTOFFICER").val());
+                if(gid==1)
+                {
+                     $("#pno").show();
+
+                }
+                if(gid==2)
+                {
+                    $("#pno").hide();
+                }
+                });
+                $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var id = $(this).attr("encid");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchFormatone",
+                    data: { 'encid': id },
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+
+
+
+        });
+    </script>
+}
+
+

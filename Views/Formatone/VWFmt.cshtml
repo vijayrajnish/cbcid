@@ -1,0 +1,409 @@
+﻿@model CBCID_APPLICATION.Models.DET_CRIME_FEMALE_CHILDREN;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.VW_DET_CRIME_FEM_CHILD> RST = ViewBag.FmtLst;
+    int i = 1;
+}
+<style>
+    .wrap-text {
+        white-space: normal !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Optional: keep table layout fixed for better control */
+    table {
+        table-layout: fixed;
+    }
+
+    /* Optional: define max width for individual cells */
+    .col-wide {
+        min-width: 50px;
+        max-width: 100px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-boxc">Sector Panel</strong></h4>
+        <br /><br />
+        <h5 class="page-title text-bold"><strong class="title-box">विवेचना/जाँच का विषय  </strong></h5>
+    </div>
+    <div class="col-md-2 text-right p-b-20 pb-3">
+        <a class="btn btn-warning " asp-action="FmtInsertUpdate" asp-controller="Formatone">विवेचना/जाँच का विषय का पंजीकरण &nbsp;<i class="fa fa-plus"></i></a>
+    </div>
+
+
+</div>
+<div class="container-fluid">
+    <form asp-action="VWFmt" asp-controller="Formatone" method="get">
+        <div class="col-md-12 text-right p-b-20">
+        </div>
+        <div class="card card-primary bg-primary-gradient mb-3 mt-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label>संबंधित अपराध का प्रकार/जाँच का विषय  </label>
+                            <select asp-for="FMTID" class="form-control" asp-items="@ViewBag.FMTID">
+                                <option selected disabled>---संबंधित अपराध का प्रकार/जाँच का विषय---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label> सी बी सं०-वर्ष </label>
+                            <input class="form-control" type="text" name="SCBCID" id="SCBCID" placeholder="सी बी सं०-वर्ष" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label> मु० अ० सं०-वर्ष </label>
+                            <input class="form-control" type="text" name="SApradhNo" id="WadhNo" placeholder="मु० अ० सं०-वर्ष" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label> एस ० आई ० बी  सं०-वर्ष </label>
+                            <input class="form-control" type="text" name="SIBNO" id="SIBNO" placeholder="एस ० आई ० बी  सं०-वर्ष" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label> सी एन आर न० </label>
+                            <input class="form-control" type="text" name="CRNO" id="CRNO" placeholder="सी एन आर न०" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xl-4">
+                        <div class="form-group">
+                            <label> अग्रिम नियत तिथि से  </label>
+                            <input type="text" id="FrmDate" name="FrmDate" autocomplete="off" class="form-control datepicker" placeholder="अग्रिम नियत तिथि से" readonly="readonly" value="@ViewBag.FrmDate" />
+                            @*   <input id="datepicker-theme" name="Frmdate" readonly="readonly" type="text" Value="@ViewBag.FrmDate" class="form-control datepicker" placeholder="FRMDATE (ex. DD/MM/YYYY)" aria-label="Use the arrow keys to pick a date" /> *@
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xl-4">
+                        <div class="form-group">
+                            <label> अग्रिम नियत तिथि तक </label>
+                            <input type="text" id="ToDate" name="ToDate" autocomplete="off" class="form-control datepicker" readonly="readonly" placeholder="अग्रिम नियत तिथि तक" value="@ViewBag.ToDate" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xl-4">
+                        <div class="form-group">
+                            <label> जनपद </label>
+                            <select asp-for="DISTRICTID" class="form-control" asp-items="@ViewBag.Did">
+                                <option value="0">---Select District---</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="form-group">
+                            <label>अभियोग की स्थिति  </label>
+                            <select asp-for="CaseStatusId" class="form-control" asp-items="@ViewBag.CaseStatusId">
+                                <option value="0">---चुनें---</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <input type="button" value="Refresh" id="btnrefresh" name="btnrefresh" class="btn btn-info btn-md " />
+                        <button class="btn btn-dark btn-md mr-2" type="submit"><i class="fa fa-search"></i> खोजें</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card p-3">
+            <div class=" card-data-tables product-table-wrapper m-t-0">
+                <div class="card-body p-2">
+
+                    <div id="scrollContainer" class="table-responsivex w-100">
+                        @* <button class="btn btn-warning mr-2 hidee" style="" onclick="scrollLeft()"><i class="fa fa-arrow-left"></i> Scroll Left</button> *@
+                        <button class="btn  btn-md bg-primary   text-black  text-center p-l-10 shadow mb-3" id="btnExport" name="btnExport" type="button"><strong class="text-white"><i class="fa fa-download"></i>&nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+                        <button class="btn btn-danger text-white btn-sm pull-right m-2" onclick="scrollRight()">Scroll Right &nbsp;<i class="fa fa-arrow-right"></i></button>
+                        <table id="productsTable" name="productsTable" class="mdl-data-table product-table m-t-30 table table-head-bg table-bordered" border="1" cellspacing="0" width="100%">
+                            <thead class="table-head-border bg-warning  text-center">
+                                <tr>
+                                    <th class="table-head-bg wrap-text col-wide">क्र० सं० </th>
+                                    <th class="table-head-bg wrap-text col-wide">एंट्री की स्थिति </th>
+                                    <th class="table-head-bg wrap-text col-wide">संबंधित अपराध<br /> का प्रकार/जाँच का विषय  </th>
+                                    <th class="table-head-bg wrap-text col-wide">सी बी सं० </th>
+                                    <th class="table-head-bg wrap-text col-wide">मु० अ० सं० </th>
+                                    <th class="table-head-bg wrap-text col-wide">थाना  </th>
+                                    <th class="table-head-bg wrap-text col-wide">धारा </th>
+                                    <th class="table-head-bg wrap-text col-wide">अग्रिम नियत तिथि   </th>
+                                    <th class="table-head-bg wrap-text col-wide">मुकदमे की स्थिति   </th>
+                                    <th class="table-head-bg wrap-text col-wide">जनपद </th>
+                                    <th class="table-head-bg wrap-text col-wide">आरोप पत्र संख्या </th>
+                                    <th class="table-head-bg wrap-text col-wide">आरोप पत्र दिनांक </th>
+                                    <th class="table-head-bg wrap-text col-wide">अभियुक्त का नाम </th>
+
+                                    <th class="table-head-bg wrap-text col-wide">आरोप पत्र न्यायलय<br /> में दाखिल करने की तिथि </th>
+                                    <th class="table-head-bg wrap-text col-wide">आरोप पत्र <br />प्रसंज्ञान की तिथि  </th>
+                                    <th class="table-head-bg wrap-text col-wide">न्याया० का नाम <br />/  सी एन आर  </th>
+                                    <th align="center">देखें</th>
+                                    <th class="table-head-bg wrap-text col-wide">अपडेट केस </th>
+                                    <th class="table-head-bg wrap-text col-wide">जांच अधिकारी जोड़ें</th>
+                                    <th class="table-head-bg wrap-text col-wide">जांच अधिकारी देखें</th>
+                                    <th class="table-head-bg wrap-text col-wide">साक्षी जोड़ें</th>
+                                    <th class="table-head-bg wrap-text col-wide">साक्षी देखें</th>
+                                    <th class="table-head-bg wrap-text col-wide">सुनवाई जोड़ें</th>
+                                    <th class="table-head-bg wrap-text col-wide">सुनवाई देखें</th>
+                                </tr>
+                            </thead>
+                            @if (RST != null)
+                            {
+                                foreach (var RS in RST)
+                                {
+                                    <tr class="Data  text-center">
+                                        <td class="wrap-text">@i</td>
+                                        <td class="wrap-text">
+                                            @if (RS.PSAVE == "1")
+                                            {
+                                                <span class="badge badge-success">फाइनल सेव</span>
+                                            }
+                                            else if (RS.PSAVE == "2")
+                                            {
+                                                <span class="badge badge-danger">पार्शियल सेव</span>
+                                            }
+                                        </td>
+                                        <td class="wrap-text">@RS.FmtName</td>
+                                        <td class="wrap-text">@RS.cbcidno</td>
+                                        <td class="wrap-text">@RS.APRADHNO</td>
+                                        <td class="wrap-text">@RS.THANA</td>
+                                        <td class="wrap-text">@RS.ACT</td>
+                                        <td class="wrap-text">
+                                            @(RS.NEXT_HEARING_DATE != null ? RS.NEXT_HEARING_DATE.ToString() : "उपलब्ध नहीं है")
+                                            <br />
+
+                                            <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(RS.DCFCID.ToString())" class=" ">
+                                                <strong class="nav-link text-warning">अप्डेट अग्रिम <br />नियत तिथि </strong>
+                                            </a>
+                                        </td>
+                                        <td class="wrap-text">@RS.ADATHAN_STATUS</td>
+                                        <td class="wrap-text">@RS.dname</td>
+                                        <td class="wrap-text">@RS.LETTERNO</td>
+                                        <td class="wrap-text">@(RS.LETTERDATE != null ? RS.LETTERDATE.ToString() : "उपलब्ध नहीं है")</td>
+                                        <td class="wrap-text">@RS.BNAME</td>
+
+
+                                        <td class="wrap-text">@(RS.DAKILDATE != null ? RS.DAKILDATE.ToString() : "उपलब्ध नहीं है")</td>
+                                        <td class="wrap-text">@(RS.ARROPVICHARANTHITHI != null ? RS.ARROPVICHARANTHITHI.ToString() : "उपलब्ध नहीं है")</td>
+                                        <td class="wrap-text">@RS.COURT</td>
+                                        <td class="wrap-text" align="center">
+                                            @if (RS.DCFCID != 0)
+                                            {
+                                                <ul class="nav nav-pills nav-primary ico-size text-center">
+                                                    @if (RS.DCFCID > 0)
+                                                    {
+                                                        <li align="center">
+                                                            <a href="#" class="clsview" encid="@RS.DCFCID" data-toggle="modal" class="nav-link "><i class="fa fa-eye fa-2x"></i></a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+                                            @if (@RS.DCFCID != 0)
+                                            {
+                                                <a href="/Formatone/FmtInsertUpdate?DCFCID=@(RS.DCFCID.ToString())" class="xbtn xbtn-primary  text-primary"><i class="fa fa-edit fa-2x"></i> </a>
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+                                            @if (RS.DCFCID != 0)
+                                            {
+                                                @if (RS.DCFCID > 0)
+                                                {
+                                                    <a href="/INVESTOFF/INSERTUPDATEINVEST?DCFCID=@(RS.DCFCID.ToString())&INVESTIGATION_OFFICER_ID=0" class="xbtn xbtn-primary  text-primary"><i class="fa fa-plus d-block"></i> </a>
+                                                }
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+                                            @if (RS.DCFCID != 0)
+                                            {
+                                                @if (RS.DCFCID > 0)
+                                                {
+                                                    <a href="/INVESTOFF/VWINVEST?DCFCID=@(RS.DCFCID.ToString())&INVESTIGATION_OFFICER_ID=0" class="xbtn xbtn-primary  text-primary"><i class="fa fa-eye fa-2x"></i> </a>
+                                                }
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+                                            @if (@RS.DCFCID != 0)
+                                            {
+                                                <a href="/AddGavaha/INSERTUPDATEGAVAHA?DCFCID=@(RS.DCFCID.ToString())" class="btn btn-outline-light text-primary">
+                                                    <strong class=""><i class="fa fa-plus d-block"></i> </strong>
+                                                </a>
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+
+                                            @if (@RS.DCFCID != 0)
+                                            {
+                                                <a href="/AddGavaha/VWGAVAHA?DCFCID=@(RS.DCFCID.ToString())&gavahaid=0" class="btnx btn-outline-lightx text-primary">
+                                                    <strong class="nav-link"><i class="fa fa-eye  fa-2x "></i> </strong>
+                                                </a>
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+
+                                            @if (@RS.DCFCID != 0)
+                                            {
+                                                <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(RS.DCFCID.ToString())" class="btn btn-outline-light text-primary">
+                                                    <strong class="nav-link"><i class="fa fa-plus d-block"></i> </strong>
+                                                </a>
+                                            }
+                                        </td>
+                                        <td class="wrap-text" align="center">
+
+                                            @if (@RS.DCFCID != 0)
+                                            {
+                                                <a href="/Sunvahi/VWSUNVAHI?DCFCID=@(RS.DCFCID.ToString())" class="btnx btn-outline-lightx text-primary">
+                                                    <strong class="nav-link"><i class="fa fa-eye  fa-2x d-block"></i> </strong>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                    i = i + 1;
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalLabel"><b> </b>  </h5>
+                </div>
+                <div class="modal-body" id="idModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='closeModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="RequestModalSCHEDULER" tabindex="-1" role="dialog" aria-labelledby="RequestModalSCHEDULERLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalSCHEDULERLabel">अधिसूचना </h5>
+                </div>
+                <div class="modal-body" id="idSCHEDULERModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='SCHEDULERcloseModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#btnExport").click(function () {
+
+                let table = $("#productsTable");
+                TableToExcel.convert(table[0], {
+                    name: `Appradh_ka_Vivaran.xlsx`,
+                    sheet: {
+                        name: 'Appradh'
+                    }
+                });
+            });
+                          $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1970:2035",
+            minDate: new Date(1970, 0, 1),
+            maxDate: new Date(2035, 0, 1)
+        });
+            $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var id = $(this).attr("encid");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchFormatone",
+                    data: { 'encid': id },
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+
+
+        $("#btnrefresh").click(function () {
+             window.location.href = "/Formatone/VWFmt";
+        });
+
+         
+        });
+    </script>
+    <script>
+        const container = document.getElementById("productsTable");
+
+        function scrollLeft() {
+            container.scrollBy({ left: -400, behavior: "smooth" });
+        }
+
+        function scrollRight() {
+            container.scrollBy({ left: 1800, behavior: "smooth" });
+        }
+    </script>
+
+}
+
+

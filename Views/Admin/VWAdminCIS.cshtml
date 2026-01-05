@@ -1,0 +1,292 @@
+﻿@model CBCID_APPLICATION.Models.DET_CRIME_FEMALE_CHILDREN;
+@using CBCID_APPLICATION.Models;
+@{
+    ViewData["Title"] = "VWFmt";
+    //Layout = "~/Views/Shared/_Dashboard.cshtml";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    List<CBCID_APPLICATION.Models.VW_DET_CRIME_FEM_CHILD> RST = ViewBag.FmtLst;
+    int i = 1;
+}
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard/VWadmin"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">Admin Panel</strong></h4>
+        <br /><br />
+        <h4 class="page-title text-bold"><strong>CB CID से संबंधित अपराधों का पंजीकरण </strong></h4>
+    </div>
+</div>
+<div class="container-fluid">
+    <form asp-action="VWAdminCIS" asp-controller="Admin" method="get">
+
+        <div class="col-md-12 text-right p-b-20">
+            @* <input type="hidden" value="@ViewBag.mafiaregid" id="Mafiaid"
+                   name="Mafiaid" /> *@
+        </div>
+
+        <div class="card card-primary bg-primary-gradient">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> संबंधित अपराधों का विवरण </label>
+                            <select asp-for="FMTID" class="form-control" asp-items="@ViewBag.FMTID">
+                                <option selected disabled>---संबंधित अपराधों का विवरण---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> खण्ड </label>
+                            <select asp-for="SECTORID" class="form-control" asp-items="@ViewBag.SECID">
+                                <option selected disabled>---Select Sector---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> जनपद </label>
+                            <select asp-for="DISTRICTID" class="form-control" asp-items="@ViewBag.DistrictId">
+                                <option selected disabled>---Select District---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> सी बी सं० </label>
+                            <input class="form-control" type="text" name="SCBCID" id="SCBCID" placeholder="सी बी सं०" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-12">
+                        <button class="btn btn-primary btn-md pull-right" type="submit"><i class="fa fa-search"></i> खोजें</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="">
+    <button class="btn btn-sm bg-primary   text-center  shadow m-2 " id="btnExport" name="btnExport" type="button"><strong class="text-white"><i class="fa fa-download"></i> &nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+    <button class="btn btn-info mr-2" style="visibility:hidden;" onclick="scrollLeft()"><i class="fa fa-arrow-left"></i> Scroll Left &nbsp;</button>
+</div>
+<div class="row">
+    @* <div class="col-md-12 text-right ">
+
+    </div> *@
+    <div class="col-md-12">
+        <div class="card p-3">
+            <div class=" card-data-tables product-table-wrapper m-t-0">
+                <div class="card-body p-2">
+                    <div id="scrollContainer" class="table-responsivex w-100 pt-20">
+                        <button class="btn btn-danger text-white btn-sm pull-right m-2" onclick="scrollRight()">Scroll Right &nbsp;<i class="fa fa-arrow-right"></i></button>
+                        <table id="productsTable" name="productsTable" class="mdl-data-table product-table m-t-30 table-head-bg table-bordered" border="1" cellspacing="0" width="100%" style="width: 100%; max-height:500px; overflow: scroll; display: block;">
+                            <thead class="table-head-border bg-info  text-center">
+                                <tr class="text-center text-bold bg-tr">
+                                    <th class="table-head-bg">क्र० सं० </th>
+                                    <th class="table-head-bg" style="min-width:180px;">संबंधित अपराधों का विवरण </th>
+                                    @* <th class="table-head-bg">खण्ड</th>
+                                    <th class="table-head-bg">जनपद </th> *@
+                                    <th class="table-head-bg" style="min-width:60px;">सी बी सं० </th>
+                                    <th class="table-head-bg" style="min-width:70px;">मु० अ० सं० </th>
+                                    <th class="table-head-bg text-center" style="min-width:120px;">धारा </th>
+                                    <th class="table-head-bg">थाना</th>
+                                    <th class="table-head-bg">बनाम(अपराधी का नाम) </th>
+                                    <th class="table-head-bg">आरोप पत्र दाखिल करने की तिथि </th>
+                                    <th class="table-head-bg">आरोप पत्र विरचन की तिथि</th>
+                                    <th class="table-head-bg" style="min-width:120px;">न्याया० का नाम /  सी एन आर</th>
+                                    @* <th class="table-head-bg">जाँच अधिकारी का नाम </th>
+                                    <th class="table-head-bg">जाँच अधिकारी का फोन नंबर</th> *@
+                                    <th class="table-head-bg">मुकदमें की स्थिति</th>
+                                    <th class="table-head-bg">सुनवाई की अगली तिथि</th>
+                                    @* <th class="table-head-bg">टिप्पणी </th> *@
+                                    <th class="table-head-bg">देखें</th>
+                                    @* <th class="table-head-bg">edit</th> *@
+                                </tr>
+                            </thead>
+
+
+                            @foreach (var RS in RST)
+                            {
+                                <tr class="Data  text-center">
+                                    <td>@i</td>
+                                    <td>@RS.FmtName</td>
+                                    @* <td>@RS.Sname</td>
+                                <td>@RS.dname</td> *@
+                                    <td>@RS.cbcidno</td>
+                                    <td>@RS.APRADHNO</td>
+                                    <td>@RS.ACT</td>
+                                    <td>@RS.THANA</td>
+                                    <td>@RS.BNAME</td>
+                                    <td>@RS.DAKILDATE</td>
+                                    <td>@RS.ARROPVICHARANTHITHI</td>
+                                    <td>@RS.COURT</td>
+                                    @* <td>@RS.PSHAKSHI_NAME</td>
+                                <td>@RS.RSHAKSHI_NAME</td> *@
+                                    <td>@RS.ADATHAN_STATUS</td>
+                                    <td>@RS.NEXT_HEARING_DATE</td>
+                                    @* <td>@RS.ABHIYUKT</td> *@
+                                    <td>
+                                        @if (RS.DCFCID != 0)
+                                        {
+                                            <ul class="nav nav-pills nav-primary ico-size">
+                                                @if (RS.DCFCID > 0)
+                                                {
+                                                    <li>
+                                                        <a href="#" class="clsview" encid="@RS.DCFCID" data-toggle="modal" class="nav-link">View</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </td>
+
+                                </tr>
+                                i = i + 1;
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalLabel">संबंधित अपराधों का विवरण   </h5>
+                </div>
+                <div class="modal-body" id="idModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='closeModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#btnExport").click(function () {
+
+                let table = $("#productsTable");
+                TableToExcel.convert(table[0], {
+                    name: `Appradh_ka_Vivaran.xlsx`,
+                    sheet: {
+                        name: 'Appradh'
+                    }
+                });
+            });
+
+            $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var id = $(this).attr("encid");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchFormatone",
+                    data: { 'encid': id },
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+
+            $("#SECTORID").on("change", function () {
+            var ddldist = $("#DISTRICTID");
+            var districtid = $(this).val();
+            if (districtid == "") {
+                alert('Select the Sector');
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/FetchDistrict",
+                    data: ({ 'DistrictId': districtid }),
+                    success: function (response) {
+                        ddldist.empty().append('<option selected="selected" value="">Please select</option>');
+                        $.each(response, function () {
+                            ddldist.append($("<option></option>").val(this['districtId']).html(this['districtName']));
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+        });
+
+            $("#DISTRICTID").on("change", function () {
+            var ddlthana = $("#THANAID");
+            var districtid = $(this).val();
+            if (districtid == "") {
+                alert('Select the District');
+                return false;
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/FetchThana",
+                    data: ({ 'DistrictId': districtid }),
+                    success: function (response) {
+
+                        ddlthana.empty().append('<option selected="selected" value="">Please select</option>');
+                        $.each(response, function () {
+                            ddlthana.append($("<option></option>").val(this['thanaid']).html(this['thananame']));
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+        });
+
+        });
+    </script>
+
+}
+
+
+
+

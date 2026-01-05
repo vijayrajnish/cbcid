@@ -1,0 +1,74 @@
+﻿.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: 5px;
+    border: 1px solid #d7e1ed;
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 650px;
+}
+
+b.bold {
+    font-weight: 800;
+    color: #000;
+}
+
+.hv-center {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.table-scroll table thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: #f5fcff;
+}
+
+
+.table-scroll table tbody tr th:nth-child(1) {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 2;
+}
+@media only screen and (min-width: 1440px) {
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 28px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 75px;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th {
+        top: 122px;
+    }
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 28px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 57px;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th {
+        top: 104px;
+    }
+}

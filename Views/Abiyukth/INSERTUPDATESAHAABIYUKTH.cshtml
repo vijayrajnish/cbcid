@@ -1,0 +1,232 @@
+﻿@model CBCID_APPLICATION.Models.SAHAYA
+@{
+    ViewData["Title"] = "Abiyukth";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.SAHAYA> RST = ViewBag.sahaLst;
+    int i = 1;
+}
+<div class="row mb-4">
+
+    <div class="col-1">
+        @if (Model.DCFCID > 0)
+        {
+            <a class="btn btn-outline-warningg btn-info text-item-start" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i> </a>
+        }
+    </div>
+    <div class="col-11 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">अभियुक्त का पंजीकरण</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATESAHAABIYUKTH" asp-controller="Abiyukth" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATESAHAABIYUKTH" />
+                <input type="hidden" asp-for="Sahayak_Abhiyukt_ID" asp-action="INSERTUPDATESAHAABIYUKTH" />
+                <input type="hidden" id="delid" value="0" name="delid"/>
+            </div>
+            <div class="row">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>  नाम  </label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> पता</label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> पिता का नाम </label>
+                            <input asp-for="Father" class="form-control" />
+                            <span asp-validation-for="Father" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> आधार संख्या</label>
+                            <input asp-for="AdharNo" class="form-control" />
+                            <span asp-validation-for="AdharNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>फोन नंबर</label>
+                            <input asp-for="Phoneno" class="form-control" />
+                            <span asp-validation-for="Phoneno" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6  col-xxl-4">
+                        <div class="form-group">
+                            <label> अभियुक्त की वर्तमान स्थिति     </label>
+                            <select asp-for="AbhiyuktStatus" class="form-control">
+                                <option value="0">---Select---</option>
+                                <option value="1">जीवित</option>
+                                <option value="2">मृत</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+                @if (Model.DCFCID == 0)
+                {
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="Create Record" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सुरक्षित करें" class="btn btn-primary" />
+                    <input type="button" id="btnaddnw" name="btnaddnw" value="Refresh/AddNew" class="btn btn-info" />
+                    <input type="button" id="btnmain" name="btnmain" value="मुख्य फॉर्म पर जायें " class="btn btn-dark" />
+                    <input type="button" id="btndelete" name="btndelete" value="डिलीट अभियुक्त" class="btn btn-primary" />
+                }
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="row">
+    <div class="col-md-12 text-center ">
+        <div class="card p-3 mt-2">
+            <div class="table-responsive  m-b-0">
+                <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                    <thead>
+                        <tr class="text-center text-bold bg-tr">
+                            <th class="bg-tr" align="center">क्र० सं० </th>
+                            <th align="center">अभियुक्त  </th>
+                            <th align="center">पिता  </th>
+                            <th align="center">पता   </th>
+                            <th align="center">फ़ोन  </th>
+                            <th align="center">आधार</th>
+                            <th align="center">अभियुक्त की वर्तमान स्थिति</th>
+                            <th align="center">अपडेट </th>
+                            <th align="center">सेलेक्ट अभियुक्त </th>
+                        </tr>
+                        @foreach (var RS in RST)
+                        {
+                            <tr>
+                                <td align="center">@i</td>
+                                <td align="center">@(RS.Name != null && RS.Name != string.Empty ? RS.Name.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Father != null && RS.Father != string.Empty ? RS.Father.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Address != null && RS.Address != string.Empty ? RS.Address.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Phoneno != null && RS.Phoneno != string.Empty ? RS.Phoneno.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.AdharNo != null && RS.AdharNo != string.Empty ? RS.AdharNo.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.AbhiyukthStatusView != null && RS.AbhiyukthStatusView != string.Empty ? RS.AbhiyukthStatusView.ToString() : "उपलब्ध नहीं है")</td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID=@(RS.DCFCID.ToString())&sid=@(RS.Sahayak_Abhiyukt_ID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+
+                                        <a href="/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID=@(RS.DCFCID.ToString())&sid=@(RS.Sahayak_Abhiyukt_ID.ToString())" class="xbtn xbtn-primary remove-class"><i class="fa fa-eye fa-2x"></i> </a>
+                                    }
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            var did=$("#DCFCID").val();
+            if(stat=="1")
+            {
+                alert('Recorded Successfully');
+                window.location.href = "/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID="+did+"&sid=0";
+            }
+            if(stat=="2")
+            {
+                alert('Recorded Updated Successfully');
+                window.location.href = "/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID="+did+"&sid=0";
+            }
+            if(stat=="9")
+            {
+                alert('Recorded Deleted Successfully');
+                window.location.href = "/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID="+did+"&sid=0";
+            }
+            });
+            $(document).on("click", "#btnsubmit", function () {
+
+
+                var sname=$("#Name").val();
+                if(sname=="")
+                {
+                    alert('Enter Name');
+                    return false;
+                }
+                var addres=$("#Address").val();
+                if(addres=="")
+                {
+                    alert('Enter Address');
+                    return false;
+                }
+                $("#delid").val(0);
+           });
+                $("#btnaddnw").on("click", function () {
+                    var did=$("#DCFCID").val();
+                    $("#delid").val(0);
+                     window.location.href = "/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID="+did+"&sid=0";
+                });
+                 $("#btnmain").on("click", function () {
+                    var did=$("#DCFCID").val();
+                    $("#delid").val(0);
+                     window.location.href = "/Formatone/FmtInsertUpdate?DCFCID="+did;
+                });
+                $("#btndelete").on("click",function () {
+
+                    
+                    var dfid=$("#DCFCID").val();
+                    if(dfid==String.Empty || dfid==null||dfid=="0")
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    else
+                    {
+                        $("#delid").val(dfid);
+                    }
+                    var ABHIID=$("#Sahayak_Abhiyukt_ID").val();
+                    if(ABHIID==String.Empty || ABHIID==null||ABHIID=="0")
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    var dlid=$("#delid").val();
+                    if(dlid=="0" || dlid==null || dlid==String.Empty)
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    var did="1";
+                    if (confirm("क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?")) {
+                        $("#delid").val(0);
+                            window.location.href = "/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID="+dfid+"&sid="+ABHIID+"&ID="+did;
+                    }
+                });
+
+        });
+    </script>
+
+}
+

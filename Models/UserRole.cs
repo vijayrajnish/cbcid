@@ -1,0 +1,11 @@
+﻿namespace CBCID_APPLICATION.Models
+{
+    public class UserRole
+    {
+        
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+        public string RoleDescription { get; set; } = string.Empty;
+
+    }
+}

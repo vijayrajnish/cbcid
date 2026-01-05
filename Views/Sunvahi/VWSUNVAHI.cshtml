@@ -1,0 +1,61 @@
+﻿@model CBCID_APPLICATION.Models.CaseHearing;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.CaseHearing> RST = ViewBag.SunvahiLst;
+    int i = 1;
+}
+<style>
+    #productsTable{
+        width:100%;
+        display: inline-masonry;
+    }
+</style>
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Formatone/VWFmt"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-10  text-center ">
+        <h5 class="page-title text-bold">
+            <strong class="title-box">सुनवाई का विवरण</strong>
+        </h5>
+    </div>
+    <div class="col-md-12 text-center ">
+        <div class="card p-3 mt-2">
+            <div class="table-responsive  m-b-0">
+                <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                    <thead>
+                        <tr class="text-center text-bold bg-tr">
+                            <th class="bg-tr" align="center">क्र० सं० </th>
+                            <th align="center">सुनवाई की पिछली तिथि </th>
+                            <th align="center">सुनवाई की अग्रिम नियत तिथि </th>
+                            <th align="center">मुकदमें की स्थिति  </th>
+                            <th align="center">अद्यतन स्थिति </th>
+                            <th align="center">टिप्पणी </th>
+                            <th align="center">अपडेट </th>
+                        </tr>
+                        @foreach (var RS in RST)
+                        {
+                            <tr>
+                                <td align="center">@i</td>
+                                <td align="center">@(RS.HearingDate != null ? RS.HearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.NextHearingDate != null ? RS.NextHearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.CaseStatus != null && RS.CaseStatus!=string.Empty ? RS.CaseStatus.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.ADATHAN_STATUS != null && RS.ADATHAN_STATUS != string.Empty ? RS.ADATHAN_STATUS.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Remark != null && RS.Remark != string.Empty ? RS.Remark.ToString() : "उपलब्ध नहीं है")</td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(RS.DCFCID.ToString())&Hearingid=@(RS.HearingID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                    }
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

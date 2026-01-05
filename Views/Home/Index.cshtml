@@ -1,0 +1,134 @@
+﻿@model CBCID_APPLICATION.Models.Utility_Users;
+@using CBCID_APPLICATION.Models;
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+<style>
+    .login-logo {
+        display: none;
+    }
+
+    .login-box, .register-box {
+        width: auto;
+    }
+
+    .logo-side {
+        padding: 25px;
+    }
+
+    .r-b-1 {
+        border-right: 1px solid #eee;
+    }
+
+    body.login-page {
+        background-position: bottom;
+        background-size: inherit !important;
+    }
+</style>
+
+<div id="login_wrapper">
+
+    <div id="login_content">
+        <div class="panel  text-center p-2 p-b-20" style="background-color:#ffffff0d;">
+            <!-- <h2 class="login-title text-white m-b-0">
+                Login Page
+            </h2>
+            <hr /> -->
+            <img src="~/images/LOGO.jpeg" height="70" width="70" border="0" />
+            <img src="/Content/assets/img/logocbcid.png" style="max-width:100px;" class="login-logo">
+            <h3 class="text-center text-white" style="font-family:system-ui; font-size:28px"><b>CID<br></b></h3>
+            <h5 class=" text-white"><strong>e-Reporting Portal</strong></h5>
+        </div>
+
+        
+        <div class="login-body mt-20">
+            <form asp-action="Index" asp-controller="Home">
+                <div>
+                    <label asp-for="UserName"></label>
+                    <div class="input-group mb-2">
+                        <input asp-for="UserName" type="text" class="form-control" placeholder="Enter User Name" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Password"></label>
+                    <div class="input-group mb-2">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 pt-4 text-center">
+                        <button type="button" id="btnReset" class="btn btn-primary btn-block btn-dark text-white pull-right">Reset</button>
+                        <button type="submit" id="btnUserLogin" class="btn btn-warning btn-block submt text-white">Sign In</button>
+                    </div>
+                </div>
+                <br /><br />
+
+            </form>
+        </div>
+    </div>
+    <!-- <div class="logo">
+        <img src="~/Content/assets/img/logo/logo.png" alt="logo" class="logo-img">
+    </div> -->
+</div>
+
+
+
+
+
+@* <script src="~/js/GetGeolocation.js"></script> *@
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+@section Scripts {
+    <script>
+            $(document).ready(function () {
+                var a=@ViewBag.Msg;
+                if(a=="1")
+                {
+                    alert('Invalid Credential');
+                    $("#UserName").val("");
+                     $("#Password").val("");
+
+                }
+                $(document).on("click", "#btnUserLogin", function () {
+                    var Uname = $("#UserName").val();
+                if (Uname == "") {
+                    alert('Enter User Name');
+                    return false;
+                }
+                 var pass = $("#Password").val();
+                if (pass == "") {
+                    alert('Enter Password');
+                    return false;
+                }
+                });
+                 $(document).on("click", "#btnReset", function () {
+                     $("#UserName").val("");
+                     $("#Password").val("");
+                 });
+        });
+    </script>
+}
+

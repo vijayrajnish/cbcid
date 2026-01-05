@@ -1,0 +1,380 @@
+﻿@model CBCID_APPLICATION.Models.Gavaha
+@{
+    ViewData["Title"] = "INSERTUPDATEGAVAHA";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.Gavaha> RST = ViewBag.GavaLst;
+    int i = 1;
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        @* <a class="btn btn-outline-warningg btn-info" href="~/Formatone/VWFmt"><i class="fa fa-arrow-left"></i></a> *@
+        @if (Model.DCFCID != 0)
+        {
+            <a href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-outline-warningg btn-info"><i class="fa fa-arrow-left"></i></a>
+        }
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">साक्षी का पंजीकरण</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATEGAVAHA" asp-controller="AddGavaha" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATEGAVAHA" />
+                <input type="hidden" asp-for="GavahaId" asp-action="INSERTUPDATEGAVAHA" />
+                <input type="hidden" id="delid" value="0" name="delid" />
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> साक्षी का प्रकार  </label>
+                        <select asp-for="GAVAHA_KA_PRAKAR_ID" class="form-control">
+                            <option selected disabled>---Select---</option>
+                            <option value="1">पुलिस</option>
+                            <option value="2">जनता का व्यक्ति</option>
+                            <option value="3">होमगार्ड </option>
+                            <option value="4">डॉक्टर  </option>
+                            <option value="5">अन्य  </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> साक्षी का  नाम  </label>
+                        <input asp-for="GavahaName" class="form-control" />
+                        <span asp-validation-for="GavahaName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> पता</label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> आधार संख्या</label>
+                        <input asp-for="AdharNo" class="form-control" />
+                        <span asp-validation-for="AdharNo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label>फोन नंबर</label>
+                        <input asp-for="Phoneno" class="form-control" />
+                        <span asp-validation-for="Phoneno" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> साक्षी की परीक्षण स्थिति  </label>
+                        <select asp-for="Examined" class="form-control">
+                            <option selected disabled>---Select---</option>
+                            <option value="1">मुख्य परीक्षा जारी  </option>
+                            <option value="3">मुख्य परीक्षा पूर्ण </option>
+                            <option value="4">प्रति परीक्षा जारी</option>
+                            <option value="5">प्रति परीक्षा पूर्ण</option>
+                            <option value="0">अपरीक्षित</option>
+                            <option value="2">अन्य</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <div id="othid">
+                            <label>अन्य कारण</label>
+                            <input asp-for="OtherRemark" class="form-control" />
+                            <span asp-validation-for="OtherRemark" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <div id="parikid">
+                            <label> अपरीक्षित होने का कारण   </label>
+                            <select asp-for="NonExaminedReasonId" class="form-control">
+                                <option selected disabled>---Select---</option>
+                                <option value="1">पीठासीन अधिकारी के अवकाश पर रहने के कारण</option>
+                                <option value="2">माल मुकदमाती न होने के कारण</option>
+                                <option value="3">अभियुक्त की अनुपस्थिति के कारण</option>
+                                <option value="4">अधिवक्ता के न्यायिक कार्य से विरत रहने के कारण</option>
+                                <option value="5">अन्य कारण</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @* <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> परीक्षण तिथि </label>
+                        <input asp-for="Examineddate" type="text" class="form-control datepicker" autocomplete="off" placeholder="परीक्षण तिथि (ex. DD/MM/YYYY)"
+                               value="@Model.Examineddate?.ToString("dd-MM-yyyy")" />
+                    </div>
+                </div> *@
+
+               @*  <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> गवाही की अग्रिम तिथि  </label>
+                        <input asp-for="GhavahiNextdate" type="text" class="form-control datepicker" autocomplete="off" placeholder="गवाही की अग्रिम तिथि (ex. DD/MM/YYYY)"
+                               value="@Model.GhavahiNextdate?.ToString("dd-MM-yyyy")" />
+                    </div>
+                </div> *@
+                @* <div class="col-md-6 col-xxl-4">
+                    <div class="form-group">
+                        <label> गवाही का प्रकार  </label>
+                        <select asp-for="GavaTypeId" class="form-control">
+                            <option selected disabled>---Select---</option>
+                            <option value="1">वीडियो कॉन्फ्रेंसिंग</option>
+                            <option value="2">न्यायालय में आकर</option>
+                            <option value="3">गवाह अनुपस्थित </option>
+                            <option value="4">अन्य  </option>
+                        </select>
+                    </div>
+                </div> *@
+                <div class="col-md-12 col-xxl-12">
+                    <div class="form-group">
+                        <label>  टिप्पणी  </label>
+                        <input asp-for="Remark" class="form-control" />
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            @if (Model.DCFCID > 0)
+            {
+                <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सुरक्षित करें" class="btn btn-primary" />
+                <input type="button" id="btnaddnw" name="btnaddnw" value="Refresh/AddNew" class="btn btn-info" />
+                <input type="button" id="btnmain" name="btnmain" value="मुख्य फॉर्म पर जायें " class="btn btn-dark" />
+                <input type="button" id="btndelete" name="btndelete" value="डिलीट साक्षी" class="btn btn-primary" />
+            }
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center ">
+        <div class="card p-3 mt-2">
+            <div class="table-responsive  m-b-0">
+                <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                    <thead>
+                        <tr class="text-center text-bold bg-tr">
+                            <th class="bg-tr" align="center">क्र० सं० </th>
+                            <th align="center">साक्षी का  नाम  </th>
+                            <th align="center">साक्षी का प्रकार </th>
+                            <th align="center">परीक्षण स्थिति </th>
+                           @*  <th align="center">परीक्षण तिथि </th> *@
+                           @*  <th align="center">साक्षी की अग्रिम तिथि </th> *@
+                            <th align="center">पता</th>
+                            <th align="center">आधार</th>
+                            <th align="center">फोन नंबर </th>
+                            <th align="center">टिप्पणी </th>
+                            <th align="center">अपडेट</th>
+                            <th align="center">सेलेक्ट साक्षी </th>
+                        </tr>
+                        @foreach (var RS in RST)
+                        {
+                            <tr>
+                                <td align="center">@i</td>
+                                <td align="center">@RS.GavahaName</td>
+                                <td align="center">
+                                    @if (RS.GavaTypeId == 1)
+                                    {
+                                        <span>वीडियो कॉन्फ्रेंसिंग</span>
+                                    }
+                                    @if (RS.GavaTypeId == 2)
+                                    {
+                                        <span>न्यायालय में आकर</span>
+                                    }
+                                    @if (RS.GavaTypeId == 3)
+                                    {
+                                        <span>गवाह अनुपस्थित</span>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (RS.Examined == 1)
+                                    {
+                                        <span>परीक्षित</span>
+                                    }
+                                    @if (RS.Examined == 0)
+                                    {
+                                        <span>अपरीक्षित</span>
+                                    }
+                                </td>
+
+                               @*  <td align="center">@(RS.Examineddate != null ? RS.Examineddate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td> *@
+                                @* <td align="center">@(RS.GhavahiNextdate != null ? RS.GhavahiNextdate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td> *@
+                                <td align="center">@(RS.Address != null ? RS.Address.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.AdharNo != null ? RS.AdharNo.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Phoneno != null ? RS.Phoneno.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Remark != null ? RS.Remark.ToString() : "उपलब्ध नहीं है")</td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/AddGavaha/INSERTUPDATEGAVAHA?DCFCID=@(RS.DCFCID.ToString())&gavahaid=@(RS.GavahaId.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/AddGavaha/INSERTUPDATEGAVAHA?DCFCID=@(RS.DCFCID.ToString())&gavahaid=@(RS.GavahaId.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-eye fa-2x"></i> </a>
+                                    }
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+
+         $(document).ready(function () {
+             $(window).on("load", function (e) {
+             var stat=@ViewBag.msg;
+             var did=$("#DCFCID").val();
+             if(stat=="1")
+             {
+                 alert('Recorded Successfully');
+                
+                  window.location.href = "/AddGavaha/INSERTUPDATEGAVAHA?DCFCID="+did+"&gavahaid=0";
+                 //return false;
+             }
+             if(stat=="2")
+             {
+                 alert('Recorded Updated Successfully');
+                 window.location.href = "/AddGavaha/INSERTUPDATEGAVAHA?DCFCID="+did+"&gavahaid=0";
+                 //return false;
+             }
+             var NonExaminedId=$("#NonExaminedReasonId").val();
+             if(NonExaminedId!="" && NonExaminedId>0)
+             {
+                 $("#parikid").show();
+             }
+             else
+             {
+                 $("#parikid").hide();
+             }
+             var othremark=$("#OtherRemark").val();
+             if(othremark!="")
+             {
+                $("#othid").show();
+             }
+             else
+             {
+                 $("#othid").hide();
+             }
+             });
+             $(document).on("click", "#btnsubmit", function () {
+
+                 var gpid=$("#GAVAHA_KA_PRAKAR_ID").val();
+
+                 if(gpid=="" || gpid==null)
+                 {
+                     alert('साक्षी का प्रकार');
+                     return false;
+                 }
+
+                 var gvname=$("#GavahaName").val();
+                 if(gvname=="")
+                 {
+                     alert('Enter Gavaha');
+                     return false;
+                 }
+                 var addres=$("#Address").val();
+                 if(addres=="")
+                 {
+                     alert('Enter Address');
+                     return false;
+                 }
+                 var exam=$("#Examined").val();
+                 if(exam=="")
+                 {
+                     alert('Enter examined');
+                     return false;
+                 }
+            });
+
+
+            $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1970:2035",
+            minDate: new Date(1970, 0, 1),
+            maxDate: new Date(2035, 0, 1)
+        });
+
+                $("#Examined").on("change", function () {
+                var Examid = $("#Examined").val();
+                if(Examid == "0") {
+                    $("#othid").hide();
+                    $("#parikid").show();
+                }
+                else if (Examid == "2") {
+                    var a=$("#OtherRemark").val();
+                    if(a!="")
+                    {
+                        $("#OtherRemark").val('');
+                    }
+                    $("#othid").show();
+                    $("#parikid").hide();
+                }
+                else if (Examid == "1") {
+                    $("#othid").hide();
+                    $("#parikid").hide();
+                }
+                });
+                $("#btnaddnw").on("click", function () {
+                    var did=$("#DCFCID").val();
+                     window.location.href = "/AddGavaha/INSERTUPDATEGAVAHA?DCFCID="+did+"&gavahaid=0";
+                });
+                $("#btnmain").on("click", function () {
+                    var did=$("#DCFCID").val();
+                     window.location.href = "/Formatone/FmtInsertUpdate?DCFCID="+did;
+                });
+                $("#btndelete").on("click",function () {
+
+
+                    var dfid=$("#DCFCID").val();
+                    if(dfid==String.Empty || dfid==null||dfid=="0")
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    else
+                    {
+                        $("#delid").val(dfid);
+                    }
+                    var gavaid=$("#GavahaId").val();
+                    if(gavaid==String.Empty || gavaid==null||gavaid=="0")
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    var dlid=$("#delid").val();
+                    if(dlid=="0" || dlid==null || dlid==String.Empty)
+                    {
+                        alert('Select The Record to Delete');
+                        return false;
+                    }
+                    var did="1";
+                    if (confirm("क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?")) {
+                        $("#delid").val(0);
+                            window.location.href = "/AddGavaha/INSERTUPDATEGAVAHA?DCFCID="+dfid+"&gavahaid="+gavaid+"&ID="+did;
+                    }
+                });
+        });
+    </script>
+
+}
+

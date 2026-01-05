@@ -1,0 +1,427 @@
+﻿@model CBCID_APPLICATION.Models.CaseHearing
+@{
+    ViewData["Title"] = "SUNVAHI";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.CaseHearing> RST = ViewBag.SunvahiLst;
+    List<CBCID_APPLICATION.Models.CSTATUSDETAILS> ABHIVIEW = ViewBag.SunvahiVIEW;
+    int i = 1;
+    int K = 0;
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+
+        @if (Model.DCFCID != 0)
+        {
+            <a href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())" class="btn btn-outline-warningg btn-info"><i class="fa fa-arrow-left"></i></a>
+        }
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">सुनवाई का पंजीकरण</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATESUNVAHI" asp-controller="Sunvahi" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" />
+                <input type="hidden" asp-for="HearingID" />
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="form-group">
+                        <label>सी बी संख्या</label>
+                        <input asp-for="CBCID" type="text" class="form-control" readonly="readonly" placeholder="CBCID NO" />
+                        <span asp-validation-for="CBCID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="form-group">
+                        <label>मु० अ० सं०</label>
+                        <input asp-for="APRADHNO" type="text" class="form-control" readonly="readonly" placeholder="APRADHNO" />
+                        <span asp-validation-for="APRADHNO" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="form-group">
+                        <label> बनाम(अपराधी का नाम)  </label>
+                        <input asp-for="Bname" type="text" class="form-control" readonly="readonly" placeholder="Bname" />
+                        <span asp-validation-for="Bname" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="form-group">
+                        <label>अभियोग की स्थिति  </label>
+                        <select asp-for="CaseStatusId" class="form-control" asp-items="@ViewBag.CaseStatusId">
+                            <option selected disabled>---चुनें---</option>
+                        </select>
+                        <span asp-validation-for="CaseStatusId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6  col-xxl-4" id="CLDT" name="CLDT">
+                        <div class="form-group">
+                            <label> आदेश का दिनांक    </label>
+                             <input id="FRMDATE" name="FRMDATE" type="text" autocomplete="off" class="form-control datepicker" readonly="readonly" placeholder="आदेश का दिनांक" value="@Model.FDATE?.ToString("dd-MM-yyyy")"  /> 
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row" id="ABID" name="ABID">
+                @if (ABHIVIEW != null && ABHIVIEW.Count > 0)
+                {
+                    <table id="AreaDescriptionDetails" class="table table-head-bg-dark table-sm">
+                        <tr>
+                            <th>अभियुक्त का नाम <span class="red">*</span></th>
+                            <th>अभ्युक्त के विरुद्ध जारी आदेश<span class="red">*</span></th>
+                            <th>जारी आदेश की तिथि<span class="red">*</span></th>
+                            <th>टिप्पणी<span class="red">*</span></th>
+                            <th><a style="cursor:pointer;" class="btn text-success pull-left AddTableRow pull-right"><i class="fa fa-plus"></i></a></th>
+                        </tr>
+                        @{
+
+                            int j = 4;
+                            foreach (var item in ABHIVIEW)
+                            {
+                                K = K + 1;
+                                j++;
+                                <tr>
+                                    <td>
+                                        <select name="SunvahiSahayakAbhiyukt_@K" id="SunvahiSahayakAbhiyukt_@K" class="form-control">
+                                            <option value="">---चुनें---</option>
+                                             @foreach (SelectListItem abhi in (IEnumerable<SelectListItem>)ViewBag.ABHIYUKTHDRP)
+                                                {
+                                                    var isSelected = abhi.Value == item.Sahayak_Abhiyukt_ID.ToString() ? "selected" : "";
+                                                    @:<option value="@abhi.Value" @isSelected>@abhi.Text</option>
+                                                }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="SunvahiABHIYUKTHKAIVIRUDHMSG_@K" id="SunvahiABHIYUKTHKAIVIRUDHMSG_@K" class="form-control">
+                                         <option value="">---चुनें---</option>
+                                         @foreach (SelectListItem abhimsg in (IEnumerable<SelectListItem>)ViewBag.ABHIYUKTMSG)
+                                            {
+                                                var isSelected = abhimsg.Value == item.ABHIYUKTHKAIVIRUDHMSG_ID.ToString() ? "selected" : "";
+                                                @:<option value="@abhimsg.Value" @isSelected>@abhimsg.Text</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="SunvahiAdeshDate_@K" name="SunvahiAdeshDate_@K" class="form-control datepicker" readonly="readonly" placeholder="जारी आदेश की तिथि" value=@(item.AdeshDate != null ? item.AdeshDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है") /></td>
+                                    <td><input type="text" id="SunvahiCASERMK_@K" name="SunvahiCASERMK_@K" class="form-control" placeholder="टिप्पणी" value=@(item.REMARK != null ? item.REMARK.ToString() : "उपलब्ध नहीं है") /></td>
+                                    <td><a style="cursor:pointer; display:none;" id="aRemoveCurrentRow_@K" name="aRemoveCurrentRow_@K" class="RemoveCurrentRow text-danger pull-right"><i class="fa fa-trash"></i></a></td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                }
+                else
+                {
+                    <table id="AreaDescriptionDetails" name="AreaDescriptionDetails" class="table table-head-bg-dark table-sm">
+                        <thead>
+                            <tr>
+                                <th>अभियुक्त का नाम <span class="red">*</span></th>
+                                <th>अभ्युक्त के विरुद्ध जारी आदेश<span class="red">*</span></th>
+                                <th>जारी आदेश की तिथि<span class="red">*</span></th>
+                                <th>टिप्पणी<span class="red">*</span></th>
+                                <th><a style="cursor:pointer;" class="btn text-success pull-left AddTableRow pull-right"><i class="fa fa-plus"></i></a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select name="SunvahiSahayakAbhiyukt_1" id="SunvahiSahayakAbhiyukt_1" class="form-control" asp-items="@ViewBag.ABHIYUKTHDRP">
+                                        <option value="">---चुनें---</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="SunvahiABHIYUKTHKAIVIRUDHMSG_1" id="SunvahiABHIYUKTHKAIVIRUDHMSG_1" class="form-control" asp-items="@ViewBag.ABHIYUKTMSG">
+                                        <option value="">---चुनें---</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="SunvahiAdeshDate_1" name="SunvahiAdeshDate_1" class="form-control datepicker" readonly="readonly" placeholder="जारी आदेश की तिथि" /></td>
+                                <td><input type="text" id="SunvahiCASERMK_1" name="SunvahiCASERMK_1" class="form-control" placeholder="टिप्पणी" /></td>
+                                <td><a style="cursor:pointer; display:none;" id="aRemoveCurrentRow_1" name="aRemoveCurrentRow_1" class="RemoveCurrentRow text-danger pull-right"><i class="fa fa-trash"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                }
+
+            </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label> अभियोजक  </label>
+                            <input asp-for="Prosecutor" type="text" class="form-control" placeholder="Prosecutor" />
+                            <span asp-validation-for="Prosecutor" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label> अभियोजक का मो0नं0 </label>
+                            <input asp-for="Mobile" type="text" class="form-control" placeholder="Mobile" />
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label> सुनवाई की  तिथि </label>
+                            <input asp-for="HearingDate" type="text" class="form-control datepicker" readonly="readonly" placeholder="सुनवाई की पिछली तिथि (ex. DD/MM/YYYY)"
+                                   value="@Model.HearingDate?.ToString("dd-MM-yyyy")" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-9 ">
+                        <div class="form-group">
+                            <label>सुनवायी की तिथि पर कृत कार्यवाही</label>
+                            <input asp-for="ADATHAN_STATUS" type="text" class="form-control" placeholder="सुनवायी की तिथि पर कृत कार्यवाही" />
+                            <span asp-validation-for="ADATHAN_STATUS" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 ">
+                        <div class="form-group">
+                            <label>अग्रिम नियत तिथि   </label>
+                            <input asp-for="NextHearingDate" type="text" class="form-control datepicker" readonly="readonly" placeholder="अग्रिम नियत तिथि (ex. DD/MM/YYYY)"
+                                   value="@Model.NextHearingDate?.ToString("dd-MM-yyyy")" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+
+                    <div class="form-group text-center">
+                        @if (Model.DCFCID > 0)
+                        {
+                            
+                                <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सुरक्षित करें" class="btn btn-primary" />
+                                <input type="button" id="btnaddnw" name="btnaddnw" value="Refresh/AddNew" class="btn btn-info" />
+                                 <input type="button" id="btnmain" name="btnmain" value="मुख्य फॉर्म पर जायें " class="btn btn-dark" />
+                          
+                        }
+                    </div>
+                </div>
+
+            </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="card p-3 mt-2">
+                <div class="table-responsive  m-b-0">
+                    <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                        <thead>
+                            <tr class="text-center text-bold bg-tr">
+                                <th class="bg-tr" align="center">क्र० सं० </th>
+                                <th align="center">सुनवाई की पिछली तिथि </th>
+                                <th align="center">सुनवाई की अग्रिम नियत तिथि </th>
+                                <th align="center">मुकदमें की स्थिति  </th>
+                                <th align="center">अद्यतन स्थिति </th>
+                                <th align="center">टिप्पणी </th>
+                                <th align="center">अपडेट </th>
+                            </tr>
+                            @foreach (var RS in RST)
+                            {
+                                <tr>
+                                    <td align="center">@i</td>
+                                    <td align="center">@(RS.HearingDate != null ? RS.HearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.NextHearingDate != null ? RS.NextHearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.CaseStatus != null && RS.CaseStatus != string.Empty ? RS.CaseStatus.ToString() : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.ADATHAN_STATUS != null && RS.ADATHAN_STATUS != string.Empty ? RS.ADATHAN_STATUS.ToString() : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.Remark != null && RS.Remark != string.Empty ? RS.Remark.ToString() : "उपलब्ध नहीं है")</td>
+                                    <td>
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(RS.DCFCID.ToString())&Hearingid=@(RS.HearingID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                        }
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+    <script>
+
+         $(document).ready(function () {
+             $(window).on("load", function (e) {
+             var stat=@ViewBag.msg;
+
+             if(stat=="1")
+             {
+
+                 alert('Recorded Successfully');
+                   var did=$("#DCFCID").val();
+                  window.location.href = "/Sunvahi/INSERTUPDATESUNVAHI?DCFCID="+did+"&Hearingid=0";
+                 //return false;
+             }
+             if(stat=="2")
+             {
+                 alert('Recorded Updated Successfully');
+                  var did=$("#DCFCID").val();
+                   window.location.href = "/Sunvahi/INSERTUPDATESUNVAHI?DCFCID="+did+"&Hearingid=0";
+                 //return false;
+             }
+            $("#ABID").hide();
+            $("#CLDT").hide();
+            var aid=$("#ABHIYUKTHKAIVIRUDHMSG_ID").val();
+            var cstat=$("#CaseStatusId").val();
+            if (aid === undefined || aid === null || aid === "" || aid === "0") {
+                        if(cstat=="10" || cstat=="11")
+                        {
+                            $("#ABID").show();
+                            $("#CLDT").hide();
+                            
+                        }
+                        else
+                        {
+                            $("#ABID").hide();
+                            if(cstat=="13")
+                            {
+                                $("#CLDT").show();
+                            }
+                        }
+                                       
+            }
+            else
+            {
+                 if(cstat=="10" || cstat=="11")
+                {
+                    $("#ABID").show();
+                    $("#CLDT").hide();
+                }
+            }
+             });
+              $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1970:2035",
+            minDate: new Date(1970, 0, 1),
+            maxDate: new Date(2035, 0, 1)
+        });
+
+             $(document).on("click", "#btnsubmit", function () {
+                  var vstat=$("#ADATHAN_STATUS").val();
+                  if(vstat=="")
+                 {
+                      alert('सुनवायी की तिथि पर कृत कार्यवाही');
+                     return false;
+                 }
+                   var Nh=$("#NextHearingDate").val();
+                    if(Nh=="")
+                  {
+                       alert('अग्रिम नियत तिथि');
+                      return false;
+                  }
+            });
+                    $("#CaseStatusId").on("change", function () {
+            var caseid = parseInt($(this).val());
+
+            if (caseid === 10 || caseid === 11) {
+
+                $("#ABID").show();
+            } else if (caseid !== 10 && caseid !== 11) {
+
+                $("#ABID").hide();
+            }
+        });
+             $("#btnaddnw").on("click", function () {
+
+                       var did=$("#DCFCID").val();
+                           window.location.href = "/Sunvahi/INSERTUPDATESUNVAHI?DCFCID="+did+"&Hearingid=0";
+                  });
+
+             $("#btnmain").on("click", function () {
+                    var did=$("#DCFCID").val();
+                     window.location.href = "/Formatone/FmtInsertUpdate?DCFCID="+did;
+                });
+
+                        function AddRowWithFieldsInTableBody(table) {
+            var rowCount = table.find("tbody tr").length;
+            var newRowIndex = rowCount + 1;
+
+            var newRow = `
+                <tr>
+                    <td>
+                        <select name="SunvahiSahayakAbhiyukt_${newRowIndex}" id="SunvahiSahayakAbhiyukt_${newRowIndex}" class="form-control">
+                            <option value="">---चुनें---</option>
+                            ${$("#SunvahiSahayakAbhiyukt_1").html()}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="SunvahiABHIYUKTHKAIVIRUDHMSG_${newRowIndex}" id="SunvahiABHIYUKTHKAIVIRUDHMSG_${newRowIndex}" class="form-control">
+                            <option value="">---चुनें---</option>
+                            ${$("#SunvahiABHIYUKTHKAIVIRUDHMSG_1").html()}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" id="SunvahiAdeshDate_${newRowIndex}" name="SunvahiAdeshDate_${newRowIndex}" class="form-control datepicker" readonly="readonly" placeholder="जारी आदेश की तिथि" />
+                    </td>
+                    <td>
+                        <input type="text" id="SunvahiCASERMK_${newRowIndex}" name="SunvahiCASERMK_${newRowIndex}" class="form-control" placeholder="टिप्पणी" />
+                    </td>
+                    <td>
+                        <a style="cursor:pointer;" class="RemoveCurrentRow text-danger pull-right"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            `;
+
+            // Append new row
+            table.find("tbody").append(newRow);
+
+            // Initialize datepicker for new input
+            $(`#SunvahiAdeshDate_${newRowIndex}`).datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1970:" + new Date().getFullYear(),
+                minDate: new Date(1970, 0, 1),
+                maxDate: new Date(2035, 0, 1)
+            });
+        }
+
+
+                function RemoveRowWithFieldsFromTableBody(link, table) {
+            link.closest("tr").remove();
+        }
+
+        // Event bindings
+        $("#AreaDescriptionDetails").on("click", ".AddTableRow", function () {
+            AddRowWithFieldsInTableBody($("#AreaDescriptionDetails"));
+        });
+
+        $("#AreaDescriptionDetails").on("click", ".RemoveCurrentRow", function () {
+            RemoveRowWithFieldsFromTableBody($(this), $("#AreaDescriptionDetails"));
+        });
+
+         $("#CaseStatusId").on("change", function () {
+                var caseid = parseInt($(this).val());
+
+                if (caseid === 13) {
+
+                $("#CLDT").show();
+            } else if (caseid !== 13) {
+
+                $("#CLDT").hide();
+            }
+          });
+
+
+        });
+
+
+    </script>
+
+}
+

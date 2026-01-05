@@ -1,0 +1,154 @@
+﻿@model CBCID_APPLICATION.Models.MDistrict;
+@using CBCID_APPLICATION.Models
+@{
+    ViewData["Title"] = "VWadmin";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    var dislst = (List<CBCID_APPLICATION.Models.MDistrict>)ViewBag.DistLst;
+}
+
+
+<link href="~/Content/assets/css1/oswald.css" rel="stylesheet" />
+<style>
+    .timer, .card-title {
+        cursor: pointer;
+    }
+
+    .district-list {
+        cursor: pointer;
+        text-decoration: underline;
+        color: blue;
+    }
+
+    .chart-view {
+        font-size: 40px;
+        color: #ff635b;
+        cursor: pointer;
+    }
+
+    .card{
+        background: rgb(34,193,195);
+        background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    }
+
+</style>
+<style>
+
+    .card-bg-blue {
+        background: #c4c5fe;
+    }
+
+    .card {
+        margin-top: 0;
+        margin-bottom: 16px;
+        min-height: 180px;
+        padding-top: 45px;
+        font-family: Oswald;
+        border-radius: 20px;
+       
+    }
+
+        .card .card-title {
+            align-items: left;
+            font-family: Oswald !important;
+            line-height: 5vh;
+            font-weight: 600;
+            /* font-size: 18px; */
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card.card-title {
+            font-size: 30px;
+        }
+
+    .card-title.one-word {
+        font-size: 30px;
+        padding: 36px 0;
+    }
+
+    .card-bg-blue1 {
+        background: #afdabf;
+    }
+
+
+    .card-bg-yellow {
+        background: #0f0c29; /* fallback for old browsers */
+    }
+
+    .card-bg-yellow {
+        background: #f7c4c3;
+    }
+
+    .card-bg-red {
+        background: #efcf9d;
+    }
+
+    .card-bg-green {
+        background: #9cbacb;
+    }
+
+    .icon {
+        width: 50px;
+        position: inherit;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(255 255 255 / 18%);
+    }
+
+    .mt-2 {
+        margin-top: 2px;
+    }
+
+    .mt-0 {
+        margin-top: 0;
+    }
+
+    @@media only screen and (max-width : 1440px) {
+        .card {
+            min-height: 230px;
+            padding-top: 75px;
+            font-family: Oswald;
+        }
+
+            .card .card-title {
+                font-size: 1.5rem !important;
+            }
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard/VWadmin"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div>
+        <div class="row">
+            @if (dislst != null)
+            {
+                foreach (var item in dislst)
+                {
+                    <div class="col-md-3 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="~/DashBoard/Getformatdetails?encid=@(item.DistrictId.ToString())"><span class="card-title">@item.DistrictName_hi</span></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+

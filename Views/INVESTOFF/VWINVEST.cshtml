@@ -1,0 +1,104 @@
+﻿@model CBCID_APPLICATION.Models.INVEST_OFFICER;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.INVEST_OFFICER> RST = ViewBag.INVESTLst;
+    int i = 1;
+}
+<style>
+    #productsTable {
+        width: 100%;
+        display: inline-masonry;
+    }
+</style>
+
+
+<div class="row">
+    <input type="hidden" asp-for="DCFCID" asp-action="VWINVEST" />
+    <input type="hidden" asp-for="INVESTIGATION_OFFICER_ID" asp-action="VWINVEST" />
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 pb-3">
+            @if (Model.DCFCID > 0)
+            {
+                <a class="btn btn-outline-warningg btn-info" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i> </a>
+            }
+            @* <a class="btn btn-outline-warningg btn-info" href="~/INVESTOFF/VWINVEST"><i class="fa fa-arrow-left"></i></a> *@
+        </div>
+        <div class="col-md-11  text-center ">
+            <h5 class="page-title text-bold">
+                <strong class="title-box">विवेचना अधिकारी का विवरण</strong>
+            </h5>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-md-12 text-center  mb-4">
+            <div class="card p-3 mt-2">
+                <div class="table-responsive  m-b-0">
+                    <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                        <thead>
+                            <tr class="text-center text-bold bg-tr">
+                                <th class="bg-tr" align="center">क्र० सं० </th>
+                                <th align="center">विवेचना अधिकारी </th>
+                                <th align="center">दिनाँक से </th>
+                                <th align="center">दिनाँक तक  </th>
+                                <th align="center">पदनाम </th>
+                                <th align="center">विवेचना अधिकारी का फोन नंबर </th>
+                                @* <th align="center">अपडेट </th> *@
+                            </tr>
+                            @foreach (var RS in RST)
+                            {
+                                <tr>
+                                    <td align="center">@i</td>
+                                    <td align="center">@(RS.OFFICER_NAME != null && RS.OFFICER_NAME != string.Empty ? RS.OFFICER_NAME.ToString() : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.FROMDATE != null ? RS.FROMDATE.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.TODATE != null ? RS.TODATE.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+
+                                    <td align="center">@(RS.DESIGNATION != null && RS.DESIGNATION != string.Empty ? RS.DESIGNATION.ToString() : "उपलब्ध नहीं है")</td>
+                                    <td align="center">@(RS.PHONENO != null && RS.PHONENO != string.Empty ? RS.PHONENO.ToString() : "उपलब्ध नहीं है")</td>
+
+                                    @* <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/INVESTOFF/INSERTUPDATEINVEST?DCFCID=@(RS.DCFCID.ToString())&INVESTIGATION_OFFICER_ID=@(RS.INVESTIGATION_OFFICER_ID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                    }
+                                </td> *@
+                                </tr>
+                                i = i + 1;
+                            }
+                    </table>
+                </div>
+            </div>
+        </div>
+        @if (Model.DCFCID > 0)
+        {
+            <a class="btn  btn-info w-25 m-auto" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i> back to main </a>
+        }
+    </div>
+
+</div>
+
+@section Scripts {
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    <script>
+
+        $(document).ready(function () {
+            var did=$("#DCFCID").val();
+
+             $(document).on("click", "#btnback", function () {
+               // $("#btnback").on("click", function () {
+
+                if (did != null && did != "") {
+                    window.location.href = "/Formatone/FmtInsertUpdate?DCFCID=" + did;
+                }
+                });
+        });
+    </script>
+
+}

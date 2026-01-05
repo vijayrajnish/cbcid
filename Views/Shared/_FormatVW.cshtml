@@ -1,0 +1,191 @@
+﻿@model CBCID_APPLICATION.Models.VW_DET_CRIME_FEM_CHILD;
+@using CBCID_APPLICATION.Models
+@{
+    var GavahaLst = (List<CBCID_APPLICATION.Models.Gavaha>)ViewBag.GLst;
+    var SunvahiLst = (List<CBCID_APPLICATION.Models.CaseHearing>)ViewBag.SunvahiLst;
+}
+<div style="overflow: scroll;">
+    <div class="col-12 col-sm-12 p-3">
+        <div class="row">
+            <h5><b>संबंधित अपराधों का विवरण </b></h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card m-t-0 p-2">
+                    <div class="table-responsive w-100" style="overflow:scroll;">
+                        <table class="table table-bordered mt-4" border="1" cellpadding="1" cellspacing="1">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>क्र० सं० </th>
+                                    <th>खण्ड </th>
+                                    <th>जनपद </th>
+                                    <th>थाना</th>
+                                    <th>सी बी सं०</th>
+                                    <th>मु० अ० सं०</th>
+                                    <th>धारा </th>
+                                    <th>बनाम(अपराधी का नाम) </th>
+                                    <th>न्याया० का नाम /  सी एन आर </th>
+                                    <th>आरोप पत्र दाखिल करने की तिथि </th>
+                                    <th>आरोप पत्र विरचन की तिथि  </th>
+                                    <th>जाँच अधिकारी का नाम  </th>
+                                    <th>जाँच अधिकारी का फोन नंबर  </th>
+                                    <th>अद्यतन स्थिति </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1.</th>
+                                    <th>@(Model.Sname != null ? Model.Sname.ToString() : "")</th>
+                                    <th>@(Model.dname != null ? Model.dname : "")</th>
+                                    <th>@(Model.THANA != null ? Model.THANA : "")</th>
+                                    <th>@(Model.cbcidno != null ? Model.cbcidno : "")</th>
+                                    <th>@(Model.APRADHNO != null ? Model.APRADHNO : "")</th>
+                                    <th>@(Model.ACT != null ? Model.ACT : "")</th>
+                                    <th>@(Model.BNAME != null ? Model.BNAME : "")</th>
+                                    <th>@(Model.COURT != null ? Model.COURT : "")</th>
+                                    <th>@(Model.DAKILDATE != null ? Model.DAKILDATE : "")</th>
+                                    <th>@(Model.ARROPVICHARANTHITHI != null ? Model.ARROPVICHARANTHITHI : "")</th>
+                                    <th>@(Model.PSHAKSHI_NAME != null ? Model.PSHAKSHI_NAME : "")</th>
+                                    <th>@(Model.RSHAKSHI_NAME != null ? Model.RSHAKSHI_NAME : "")</th>
+                                    <th>@(Model.ADATHAN_STATUS != null ? Model.ADATHAN_STATUS : "")</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+<br />
+
+<div class="row">
+
+    <div class="col-12 p-0">
+        <div>
+            
+            @if (GavahaLst != null && GavahaLst.Count > 0)
+            {
+                int srno = 1;
+                <h5><b>गवाह का विवरण </b></h5>
+                <div class="table-responsive w-100">
+                    <table class="table table-head-bg-default mt-4" border="1" cellpadding="1" cellspacing="1">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">क्र० सं० </th>
+                                <th scope="col">गवाह का नाम </th>
+                                <th scope="col">गवाही का प्रकार</th>
+                                <th scope="col">गवाही की परीक्षण स्थिति</th>
+                                <th scope="col">गवाही के लिए नियत तिथि </th>
+                                <th scope="col">फोन नंबर</th>
+                                <th scope="col">आधार नंबर </th>
+                                <th scope="col">पता </th>
+                                <th scope="col">टिप्पणी</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hd in GavahaLst)
+                            {
+                                <tr>
+                                    <td>@srno</td>
+                                    <td>@(hd.GavahaName != null ? hd.GavahaName.ToUpper() : "उपलब्ध नहीं")</td>
+                                  <td>
+                                        @if ((hd.GavaTypeId != null))
+                                        {
+                                            if (hd.GavaTypeId == 1)
+                                            {
+                                                <span>वीडियो कॉन्फ्रेंसिंग</span>
+                                            }
+                                            else if (hd.GavaTypeId == 2)
+                                            {
+                                                <span>न्यायालय में आकर</span>
+                                            }
+                                            else if (hd.GavaTypeId == 3)
+                                            {
+                                                <span>अन्य</span>
+                                            }
+                                            else if (hd.GavaTypeId == 4)
+                                            {
+                                                <span>गवाह अनुपस्थित </span>
+                                            }
+                                            else
+                                            {
+                                                <span>Not Selected</span>
+                                            }
+                                        }
+                                  </td>
+                                  <td>
+                                        @if ((hd.Examined != null))
+                                        {
+                                            if (hd.Examined == 1)
+                                            {
+                                            <span>परीक्षित </span> 
+                                            }
+                                            else
+                                            {
+                                            <span>अपरीक्षित</span> 
+                                            }
+                                        }
+                                        
+                                  </td>
+                                  <td>
+                                        @(hd.Examineddate != null ? hd.Examineddate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं")
+                                  </td>
+                                    <td>@(hd.Phoneno != null ? hd.Phoneno.ToUpper() : "उपलब्ध नहीं")</td>
+                                    <td>@(hd.AdharNo != null ? hd.AdharNo.ToUpper() : "उपलब्ध नहीं")</td>
+                                    <td>@(hd.Address != null ? hd.Address.ToUpper() : "उपलब्ध नहीं")</td>
+                                    <td>@(hd.Remark != null ? hd.Remark.ToUpper() : "उपलब्ध नहीं")</td>
+                                </tr>
+                                srno++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-12 p-0">
+        <div>
+            @if (SunvahiLst != null && SunvahiLst.Count > 0)
+            {
+                int srno = 1;
+                <h5><b>सुनवाई का विवरण </b></h5>
+                <div class="table-responsive w-100">
+                    <table class="table table-head-bg-default mt-4" border="1" cellpadding="1" cellspacing="1">
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">क्र० सं० </th>
+                                <th scope="col">सुनवाई की पिछली तिथि </th>
+                                <th scope="col">सुनवाई की अग्रिम नियत तिथि</th>
+
+                                <th scope="col"> मुकदमें की स्थिति</th>
+                                
+                                <th scope="col">  टिप्पणी</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hd in SunvahiLst)
+                            {
+                                <tr>
+                                    <td>@srno</td>
+                                    <td>@(hd.HearingDate != null ? hd.HearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं")</td>
+                                    <td>@(hd.NextHearingDate != null ? hd.NextHearingDate.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं")</td>
+                                    <td>@(hd.CaseStatus != null ? hd.CaseStatus.ToUpper() : "उपलब्ध नहीं")</td>
+                                    
+                                    <td>@(hd.Remark != null ? hd.Remark.ToUpper() : "उपलब्ध नहीं")</td>
+                                </tr>
+                                srno++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@model CBCID_APPLICATION.Models.SAHAYA;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.SAHAYA> RST = ViewBag.sahaLst;
+    int i = 1;
+}
+<style>
+    #productsTable {
+        width: 100%;
+        display: inline-masonry;
+    }
+</style>
+<div class="row">
+    <div class="col-md-1 p-b-20 pb-3">
+        @if (Model.DCFCID > 0)
+        {
+            <a class="btn btn-outline-warningg btn-info" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i>&nbsp;  main </a>
+        }
+    </div>
+    <div class="col-md-12  text-center ">
+        <h5 class="page-title text-bold">
+            <strong class="title-box">अभियुक्त का विवरण</strong>
+        </h5>
+    </div>
+    <div class="row">
+        <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATESAHAABIYUKTH" />
+        <input type="hidden" asp-for="Sahayak_Abhiyukt_ID" asp-action="INSERTUPDATESAHAABIYUKTH" />
+    </div>
+    
+
+    <div class="col-md-12 text-center ">
+        <div class="card p-3 mt-2 mb-3">
+            <div class="table-responsive  m-b-0">
+                <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                    <thead>
+                        <tr class="text-center text-bold bg-tr">
+                            <th class="bg-tr" align="center">क्र० सं० </th>
+                            <th align="center">सहअभियुक्त  </th>
+                            <th align="center">पिता  </th>
+                            <th align="center">पता   </th>
+                            <th align="center">फ़ोन  </th>
+                            <th align="center">आधार</th>
+                            @* <th align="center">अपडेट </th> *@
+                        </tr>
+                        @foreach (var RS in RST)
+                        {
+                            <tr>
+                                <td align="center">@i</td>
+                                <td align="center">@(RS.Name != null && RS.Name != string.Empty ? RS.Name.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Father != null && RS.Father != string.Empty ? RS.Father.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Address != null && RS.Address != string.Empty ? RS.Address.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.Phoneno != null && RS.Phoneno != string.Empty ? RS.Phoneno.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.AdharNo != null && RS.AdharNo != string.Empty ? RS.AdharNo.ToString() : "उपलब्ध नहीं है")</td>
+                                @* <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/Abiyukth/INSERTUPDATESAHAABIYUKTH?DCFCID=@(RS.DCFCID.ToString())&sid=@(RS.Sahayak_Abhiyukt_ID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                    }
+                                </td> *@
+                            </tr>
+                            i = i + 1;
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+    @if(Model.DCFCID > 0)
+    {
+    <a class="btn btn-outline-warningg btn-info w-20" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i> &nbsp; main </a>
+    }
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

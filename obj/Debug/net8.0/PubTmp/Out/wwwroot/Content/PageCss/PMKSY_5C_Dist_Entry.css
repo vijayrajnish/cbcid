@@ -1,0 +1,101 @@
+﻿.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 5px;
+    border: 1px solid #d7e1ed;
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 450px;
+}
+
+    .table-scroll table thead tr th {
+        position: sticky;
+        top: 3px;
+        background-color: #fff;
+        z-index: 2;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th {
+        position: sticky;
+        top: 50px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        position: sticky;
+        top: 74px;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th {
+        position: sticky;
+        top: 107px;
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        position: sticky;
+        top: 160px;
+        background-color: #fff;
+    }
+
+    .table-scroll table thead tr:nth-child(6) th {
+        position: sticky;
+        top: 165px;
+        background-color: #fff;
+    }
+
+    .table-scroll table thead tr:nth-child(7) th {
+        position: sticky;
+        top: 216px;
+        background-color: #fff;
+    }
+
+    .table-scroll table thead tr th {
+        background-color: #dbf3ff !important;
+        border: 1px solid #dbf3ff;
+    }
+@media only screen and (min-width: 1440px) {
+
+    .table-scroll table thead tr:nth-child(1) th {
+        top: 0px;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 47.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 76.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        top: 158px;
+    }
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+
+    .table-scroll table thead tr:nth-child(1) th {
+        top: 0;
+    }
+
+    .table-scroll table thead tr:nth-child(2) th {
+        top: 44.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(3) th {
+        top: 72.5px;
+    }
+
+    .table-scroll table thead tr:nth-child(4) th {
+        top: 103px;
+    }
+
+    .table-scroll table thead tr:nth-child(5) th {
+        top: 153px;
+    }
+}

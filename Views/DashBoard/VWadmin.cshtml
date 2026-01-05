@@ -1,0 +1,184 @@
+﻿@model CBCID_APPLICATION.Models.MSector;
+@using CBCID_APPLICATION.Models
+
+@{
+    ViewData["Title"] = "VWadmin";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    var seclst = (List<CBCID_APPLICATION.Models.MSector>)ViewBag.SecLst;
+}
+
+
+<link href="~/Content/assets/css1/oswald.css" rel="stylesheet" />
+<style>
+    .timer, .card-title {
+        cursor: pointer;
+    }
+
+    .district-list {
+        cursor: pointer;
+        text-decoration: underline;
+        color: blue;
+    }
+
+    .chart-view {
+        font-size: 2rem;
+        color: #ff635b;
+        cursor: pointer;
+    }
+</style>
+<style>
+
+    .card-bg-blue {
+        background: #c4c5fe;
+    }
+
+    .card {
+        margin-top: 0;
+        margin-bottom: 16px;
+        min-height: 25vh;
+        padding-top: 9vh;
+        font-family: Oswald;
+        border-radius: 20px;
+      
+        color:#fff !important;
+
+    }
+    .card:hover{
+        color:gold;
+    }
+
+        .card .card-title {
+            align-items: left;
+            font-family: Oswald !important;
+            line-height: 25vh;
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+            .card.card-title{
+                 font-size: 2rem;
+            }
+
+
+    .card-title.one-word {
+        font-size: 30px;
+        padding: 36px 0;
+    }
+
+
+
+
+    .card-bg-blue1 {
+        background: #afdabf;
+    }
+
+
+   
+    .card-bg-yellow {
+        background: #0f0c29; /* fallback for old browsers */
+    }
+
+    
+
+    .card-bg-yellow {
+        background: #f7c4c3;
+    }
+
+
+
+    .card-bg-red {
+        background: #efcf9d;
+    }
+
+
+    .card-bg-green {
+        background: #9cbacb;
+    }
+
+    .icon {
+        width: 50px;
+        position: inherit;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(255 255 255 / 18%);
+    }
+
+   
+
+   
+
+    .mt-2 {
+        margin-top: 2px;
+    }
+
+    .mt-0 {
+        margin-top: 0;
+    }
+
+   
+
+    .card .card-title {
+        font-size: 2rem !important;
+        
+
+    }
+
+    .card .card-title:hover {
+        font-size: 2.2rem !important;
+        color: gold;
+    }
+/* 
+    footer, .footer{
+        display:block;
+    } */
+
+    @@media only screen and (max-width : 1440px) {
+        .card {
+            min-height: 30vh;
+            padding-top: 0px;
+            font-family: Oswald;
+        }
+
+            .card .card-title {
+                font-size: 1.5rem !important;
+               /*  color:#fff; */
+            }
+    }
+</style>
+
+    <div class="row">
+         <div>
+            <div class="row">
+                    @if (seclst != null)
+                    {
+                        foreach (var item in seclst)
+                        {
+                            <div class="col-md-4 col-sm-12">
+                                <div class="card MEERUT" style="background-image:url(@(item.CreatedBy.ToString())); background-position:center; background-size:cover;">
+                                    <div class="card-body">
+                                         <a class="text-white" href="~/DashBoard/VWAdminSectorDetails?encid=@(item.SECTORID.ToString())"><span class="card-title">@item.SEC_HNAME</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+            <div class="col-md-4 col-sm-12">
+                <div class="card MEERUT" style="background-image:url(/images/cis.jpg); background-position:center; background-size:cover;">
+                    <div class="card-body">
+                        <a class="text-white" href="~/DashBoard/GetCISformatdetails?encid=4"><span class="card-title">CIS</span></a>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+         </div>
+    </div>
+
+
+
+
+
+

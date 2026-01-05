@@ -1,0 +1,216 @@
+﻿@model CBCID_APPLICATION.Models.ApplicationRecordCnt;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.Notification> RST = ViewBag.AdminDashBoardLst;
+    int i = 1;
+}
+<style>
+
+    .col-wide {
+        min-width: 50px;
+        max-width: 100px;
+    }
+
+    #productsTable {
+        display: inline-masonry;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+<div class="row">
+    <div class="col-md-12 text-right p-b-20 pb-3">
+        <a class="btn btn-warning " asp-action="VWFmt" asp-controller="Formatone">संबंधित अपराध का प्रकार/जाँच का विषय</a>
+    </div>
+</div>
+<div>
+    <input type="hidden" asp-for="SecId" />
+    <input type="hidden" asp-for="Roleid" />
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="text-primary text-bold mb-3">Application Entry Overview</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Entry</h5>
+                        <p class="card-text">@Model.totapplicationcnt</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Partial Save Count</h5>
+                        <p class="card-text">@Model.totpartialsave</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card  bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Final Save Count</h5>
+                        <p class="card-text">@Model.totfinalsave</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card p-3 mt-5">
+                    <div class=" card-data-tables product-table-wrapper m-t-0">
+                        <div class="card-body p-2">
+                            <h4 class="text-center page-title text-primary">Application Status Activity</h4>
+                            <div class="table-responsive w-100">
+
+                                <button class="btn  btn-md bg-primary   text-black  text-center p-l-10 shadow mb-3" id="btnExport" name="btnExport" type="button"><strong class="text-white"><i class="fa fa-download"></i>&nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+                                <table class="product-table m-t-30 table  table-bordered" border="1" cellspacing="2" width="100%">
+                                    <thead class="table-head-border bg-warning  text-center">
+                                        <tr>
+                                            <th>SrNo.</th>
+                                            <th>Sector Name</th>
+                                            <th>No of Entry</th>
+                                            <th>Partial Save</th>
+                                            <th>Final Save</th>
+                                        </tr>
+                                    </thead>
+                                    @if (RST != null)
+                                    {
+                                        foreach (var RS in RST)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@RS.DNAME</td>
+                                                <td>@RS.NO_OF_ENTRY</td>
+                                                <td>@RS.PARTIAL_SAVE</td>
+                                                <td>@RS.FINAL_SAVE</td>
+                                            </tr>
+                                            i = i + 1;
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalLabel"><b> </b>  </h5>
+                </div>
+                <div class="modal-body" id="idModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='closeModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+    <script>
+
+        $(document).ready(function () {
+             var showNotification = '@ViewBag.ShowNotification'.toLowerCase() === 'true';
+            if (showNotification) {
+                var Sid = $("#SecId").val();
+                var Rid = $("#Roleid").val();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchNotification",
+                    data: { 'Secid': Sid,'Roleid': Rid},
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+            $("#btnExport").click(function () {
+
+                let table = $("#productsTable");
+                TableToExcel.convert(table[0], {
+                    name: `Appradh_ka_Vivaran.xlsx`,
+                    sheet: {
+                        name: 'Appradh'
+                    }
+                });
+            });
+
+             $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var Sid = $(this).attr("SecId");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchSectorNotification",
+                    data: { 'encid': id },
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+
+
+
+
+

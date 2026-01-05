@@ -1,0 +1,184 @@
+﻿@model CBCID_APPLICATION.Models.INVEST_OFFICER
+@{
+    ViewData["Title"] = "Add Investigation Officer";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.INVEST_OFFICER> RST = ViewBag.INVESTLst;
+    int i = 1;
+}
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        @if (Model.DCFCID > 0)
+        {
+            <a class="btn btn-outline-warningg btn-info" href="/Formatone/FmtInsertUpdate?DCFCID=@(Model.DCFCID.ToString())"><i class="fa fa-arrow-left"></i> </a>
+        }
+    </div>
+    <div class="col-md-8 text-center">
+        <h4 class="page-title text-bold"><strong class="title-box">विवेचना अधिकारी जोड़ें</strong></h4>
+    </div>
+</div>
+<div class="card p-3">
+    <form asp-action="INSERTUPDATEINVEST" asp-controller="INVESTOFF" method="post">
+        <div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DCFCID" asp-action="INSERTUPDATEINVEST" />
+                <input type="hidden" asp-for="INVESTIGATION_OFFICER_ID" asp-action="INSERTUPDATEINVEST" />
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>विवेचना अधिकारी</label>
+                        <input asp-for="OFFICER_NAME" type="text" class="form-control" placeholder="OFFICER_NAME" />
+                        <span asp-validation-for="OFFICER_NAME" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> पदनाम  </label>
+                        <select asp-for="DESIGNATIONID" class="form-control">
+                            <option selected disabled>---Select---</option>
+                            <option value="1">SP</option>
+                            <option value="2">ADDSP</option>
+                            <option value="3">DYSP </option>
+                            <option value="4">INSPECTOR </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>विवेचना अधिकारी का फोन नंबर</label>
+                        <input asp-for="PHONENO" type="text" class="form-control" placeholder="Phone No." />
+                        <span asp-validation-for="PHONENO" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label> दिनाँक से </label>
+                        <input asp-for="FROMDATE" type="text" class="form-control datepicker" autocomplete="off" placeholder="FROM तिथि (ex. DD-MM-YYYY)"
+                               value="@Model.FROMDATE?.ToString("dd-MM-yyyy")" />
+                        @* <span asp-validation-for="FROMDATE" class="text-danger"></span> *@
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label>  दिनाँक तक  </label>
+                        <input asp-for="TODATE" type="text" class="form-control datepicker" autocomplete="off" placeholder="नियत तिथि की कार्यवाही (ex. DD-MM-YYYY)"
+                               value="@Model.TODATE?.ToString("dd-MM-yyyy")" />
+                        @*  <span asp-validation-for="TODATE" class="text-danger"></span> *@
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group text-center">
+                    <input type="submit" id="btnsubmit" name="btnsubmit" value="रिकार्ड सेव करें" class="btn btn-primary" />
+                    <input type="button" id="btnaddnw" name="btnaddnw" value="Refresh/AddNew" class="btn btn-info" />
+                    <input type="button" id="btnmain" name="btnmain" value="मुख्य फॉर्म पर जायें " class="btn btn-dark" />
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center  mb-4">
+        <div class="card p-3 mt-2">
+            <div class="table-responsive  m-b-0">
+                <table id="productsTable" class="table text-center  table-hover table-bordered text-center p-m-0" style="table-layout: auto; over-flow: break-word; display:inline-table;">
+                    <thead>
+                        <tr class="text-center text-bold bg-tr">
+                            <th class="bg-tr" align="center">क्र० सं० </th>
+                            <th align="center">विवेचना अधिकारी </th>
+                            <th align="center">दिनाँक से </th>
+                            <th align="center">दिनाँक तक  </th>
+                            <th align="center">पदनाम </th>
+                            <th align="center">विवेचना अधिकारी का फोन नंबर </th>
+                            <th align="center">अपडेट </th>
+                        </tr>
+                        @foreach (var RS in RST)
+                        {
+                            <tr>
+                                <td align="center">@i</td>
+                                <td align="center">@(RS.OFFICER_NAME != null && RS.OFFICER_NAME != string.Empty ? RS.OFFICER_NAME.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.FROMDATE != null ? RS.FROMDATE.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.TODATE != null ? RS.TODATE.Value.ToString("dd-MM-yyyy") : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.DESIGNATION != null && RS.DESIGNATION != string.Empty ? RS.DESIGNATION.ToString() : "उपलब्ध नहीं है")</td>
+                                <td align="center">@(RS.PHONENO != null && RS.PHONENO != string.Empty ? RS.PHONENO.ToString() : "उपलब्ध नहीं है")</td>
+                                <td>
+                                    @if (@RS.DCFCID != 0)
+                                    {
+                                        <a href="/INVESTOFF/INSERTUPDATEINVEST?DCFCID=@(RS.DCFCID.ToString())&sid=@(RS.INVESTIGATION_OFFICER_ID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    
+    <script>
+
+        $(document).ready(function () {
+            $(window).on("load", function (e) {
+            var stat=@ViewBag.msg;
+            var did=$("#DCFCID").val();
+            if(stat=="1")
+            {
+                
+                alert('Recorded Successfully');
+                window.location.href = "/INVESTOFF/INSERTUPDATEINVEST?DCFCID="+did+"&sid=0";
+
+            }
+            if(stat=="2")
+            {
+                alert('Recorded Updated Successfully');
+                window.location.href = "/INVESTOFF/INSERTUPDATEINVEST?DCFCID="+did+"&sid=0";
+                return false;
+            }
+            });
+            $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1970:2035",
+            minDate: new Date(1970, 0, 1),
+            maxDate: new Date(2035, 0, 1)
+        });
+
+            $(document).on("click", "#btnsubmit", function () {
+                var offname=$("#OFFICER_NAME").val();
+                if(offname=="")
+                {
+                    alert('Enter Officer Name');
+                    return false;
+                }
+                var did=$("#DESIGNATIONID").val();
+                if(did=="")
+                {
+                    alert('Enter Designation');
+                    return false;
+                }
+                
+           });
+
+            $("#btnaddnw").on("click", function () {
+                    var did=$("#DCFCID").val();
+                     window.location.href = "/INVESTOFF/INSERTUPDATEINVEST?DCFCID="+did+"&sid=0";
+                });
+                 $("#btnmain").on("click", function () {
+                    var did=$("#DCFCID").val();
+                     window.location.href = "/Formatone/FmtInsertUpdate?DCFCID="+did;
+                });
+        });
+    </script>
+
+}
+

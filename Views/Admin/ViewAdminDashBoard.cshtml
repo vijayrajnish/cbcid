@@ -1,0 +1,249 @@
+﻿@model CBCID_APPLICATION.Models.ApplicationRecordCnt;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    List<CBCID_APPLICATION.Models.ADMIN_DASHBOARD_VIEW> RST = ViewBag.AdminDashBoardLst;
+    List<CBCID_APPLICATION.Models.CASESTATUS_CNT_SECTOR_WISE> CSTLST = ViewBag.casesstatuslst;
+    int i = 1;
+    int J = 1;
+    int totentry = 0;
+    int totpartialsave = 0;
+    int totfinalsave = 0;
+    int totstatuscnt = 0;
+    int varsectorid = 0;
+    int k = 0;
+}
+<style>
+
+    .col-wide {
+        min-width: 50px;
+        max-width: 100px;
+    }
+
+    #productsTable {
+        display: inline-masonry;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+
+
+<div class="container-fluid">
+    <form asp-action="ViewAdminDashBoard" asp-controller="Admin" method="post">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="text-primary text-bold mb-3">Application Entry Overview</h2>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary">
+
+                        <div class="card-body  text-center">
+                            <h5 class="card-title">@Model.totapplicationcnt</h5>
+                            <p class="card-text">Total Entry</p>
+                            <input type="submit" name="PSAVE" value="Total" class="btn btn-block btn-info" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success">
+                        <div class="card-body  text-center">
+                            <h5 class="card-title">@Model.totpartialsave</h5>
+                            <p class="card-text">Partial Save Count</p>
+                            <input type="submit" name="PSAVE" value="Partial" class="btn btn-block btn-warning" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-brown">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@Model.totfinalsave</h5>
+                            <p class="card-text">Final Save Count</p>
+                            <input type="submit" name="PSAVE" value="Final" class="btn btn-block btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="card p-3 mt-5">
+                        <div class=" card-data-tables product-table-wrapper m-t-0">
+                            <div class="card-body p-2">
+                                <h4 class="text-center page-title text-primary">Application Status Activity</h4>
+                                <hr />
+                                <div class="table-responsive w-100">
+
+                                    <button class="btn  btn-md bg-primary   text-black  text-center p-l-10 shadow mb-3" id="btnExport" name="btnExport" type="button"><strong class="text-white"><i class="fa fa-download"></i>&nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+                                    <table id="astbl" name="astbl" class="product-table m-t-30 table  table-bordered" border="1" cellspacing="2" width="100%">
+                                        <thead class="table-head-border bg-warning  text-center">
+                                            <tr>
+                                                <th>SrNo.</th>
+                                                <th>Sector Name</th>
+                                                <th>No of Entry</th>
+                                                <th>Partial Save</th>
+                                                <th>Final Save</th>
+                                            </tr>
+                                        </thead>
+                                        @if (RST != null)
+                                        {
+                                            foreach (var RS in RST)
+                                            {
+                                                totentry += Convert.ToInt32(RS.NO_OF_ENTRY);
+                                                totpartialsave += Convert.ToInt32(RS.PARTIAL_SAVE);
+                                                totfinalsave += Convert.ToInt32(RS.FINAL_SAVE);
+
+                                                <tr>
+                                                    <td class="text-right">@i</td>
+                                                    <td>@RS.SEC_ENAME</td>
+                                                    <td class="text-right">@RS.NO_OF_ENTRY</td>
+                                                    <td class="text-right">@RS.PARTIAL_SAVE</td>
+                                                    <td class="text-right">@RS.FINAL_SAVE</td>
+                                                </tr>
+
+                                                i++;
+                                            }
+                                        }
+                                        <tr class="bg-success">
+                                            <td colspan="1" class="text-right"><strong>@i</strong></td>
+                                            <td colspan="1" class="text-left"><strong>Total:-</strong></td>
+                                            <td class="text-right">@totentry</td>
+                                            <td class="text-right">@totpartialsave</td>
+                                            <td class="text-right">@totfinalsave</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="card p-3 mt-5">
+                        <div class=" card-data-tables product-table-wrapper m-t-0">
+                            <div class="card-body p-2">
+                                <h4 class="text-center page-title text-primary">Sector Wise Case Status</h4>
+                                <hr />
+                                <div class="table-responsive w-100">
+
+                                    <button class="btn  btn-md bg-primary   text-black  text-center p-l-10 shadow mb-3" id="btnExport1" name="btnExport1" type="button"><strong class="text-white"><i class="fa fa-download"></i>&nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+                                    <table id="cstbl" name="cstbl" class="product-table1 m-t-30 table  table-bordered" border="1" cellspacing="2" width="100%">
+                                        <thead class="table-head-border bg-warning  text-center">
+                                            <tr>
+                                                <th>SrNo.</th>
+                                                <th>Sector Name</th>
+                                                <th>Case Status</th>
+                                                <th>Count</th>
+                                            </tr>
+                                        </thead>
+                                        @if (CSTLST != null)
+                                        {
+                                            foreach (var CLST in CSTLST)
+                                            {
+                                                k++;
+                                                if (k <= 13)
+                                                {
+                                                    totstatuscnt += Convert.ToInt32(CLST.CNT);
+                                                    varsectorid = Convert.ToInt32(CLST.SECTORID);
+                                                }
+
+                                                <tr>
+                                                    <td>@J</td>
+                                                    <td>@CLST.SEC_ENAME</td>
+                                                    <td>@CLST.CStatus</td>
+                                                    <td>
+                                                        @if ((CLST.SECTORID > 0 && @CLST.CaseStatusId > 0 && @CLST.CNT>0))
+                                                        {
+                                                                <a href="/Admin/VWAdmin?SECTORID=@(@CLST.SECTORID.ToString())&CaseStatusId=@(@CLST.CaseStatusId.ToString())" class="xbtn xbtn-primary text-success nav-link">@CLST.CNT </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="xbtn xbtn-primary text-success nav-link"> @CLST.CNT</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+
+                                                J = J + 1;
+                                                if (k == 13)
+                                                {
+                                                    <tr class="bg-success">
+                                                        <td colspan="1"><strong>@J</strong></td>
+                                                        <td class="text-center">Sector @CLST.SEC_ENAME Total Status Count</td>
+                                                        <td class="text-center">Total</td>
+                                                        <td>
+                                                            @totstatuscnt
+                                                        </td>
+                                                    </tr>
+                                                    k = 0;
+                                                    totstatuscnt = 0;
+                                                    J = J + 1;
+                                                }
+                                            }
+
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+    <script>
+
+               $(document).ready(function () {
+
+            // Export buttons
+            $("#btnExport").click(function () {
+                let table = $("#astbl");
+                TableToExcel.convert(table[0], {
+                    name: `ApplicationStatus.xlsx`,
+                    sheet: { name: 'ApplicationStatus' }
+                });
+            });
+
+            $("#btnExport1").click(function () {
+                let table = $("#cstbl");
+                TableToExcel.convert(table[0], {
+                    name: `SectorWiseCaseStatus.xlsx`,
+                    sheet: { name: 'SectorWiseCaseStatus' }
+                });
+            });
+
+
+
+        $('#cstbl').DataTable({
+            "pageLength": 200,
+            "destroy": true
+        });
+        });
+    </script>
+
+}
+
+
+
+
+

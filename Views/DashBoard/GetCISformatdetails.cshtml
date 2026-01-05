@@ -1,0 +1,140 @@
+﻿@model CBCID_APPLICATION.Models.AdminDashBoardView;
+@using CBCID_APPLICATION.Models
+@{
+    ViewData["Title"] = "VWadmin";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    var seclst = (List<CBCID_APPLICATION.Models.AdminDashBoardView>)ViewBag.FORMATLST;
+    int i = 1;
+}
+
+
+<link href="~/Content/assets/css1/oswald.css" rel="stylesheet" />
+
+<style>
+
+    .card-bg-blue {
+        background: #eeeeff;
+    }
+
+    .card {
+        margin-top: 0;
+        margin-bottom: 16px;
+        min-height: 180px;
+        padding-top: 10px;
+        font-family: Oswald;
+        border-radius: 20px;
+    }
+
+        .card .card-title {
+            align-items: left;
+            font-family: Oswald !important;
+            line-height: 34px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+    .card-title.one-word {
+        font-size: 30px;
+        padding: 36px 0;
+    }
+
+
+    .card-bg-blue1 {
+        background: #afdabf;
+    }
+
+    .card-bg-yellow {
+        background: #0f0c29; /* fallback for old browsers */
+    }
+
+
+    .card-bg-yellow {
+        background: #f7c4c3;
+    }
+
+    .card-bg-red {
+        background: #efcf9d;
+    }
+
+    .card-bg-green {
+        background: #9cbacb;
+    }
+
+    .icon {
+        width: 50px;
+        position: inherit;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(255 255 255 / 18%);
+    }
+
+    .mt-2 {
+        margin-top: 2px;
+    }
+
+    .mt-0 {
+        margin-top: 0;
+    }
+
+    @@media only screen and (max-width : 1440px) {
+        .card {
+            min-height: 190px;
+            padding-top: 0px;
+            font-family: Oswald;
+        }
+
+            .card .card-title {
+                font-size: 17px !important;
+            }
+    }
+
+    .card:hover {
+        border: 1px solid #ff5003;
+        border-top: 2px solid #bb5105;
+        border-bottom: 2px solid #bb5105;
+        border-left: 0;
+        border-right: 0;
+    }
+
+</style>
+<div class="row">
+    <input type="hidden" asp-for="Distid" asp-action="GetCISformatdetails" />
+</div>
+<div class="row">
+    <div class="col-md-12 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard/GetCISformatdetails?encid=@Model.Distid.ToString()"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div>
+        <div class="row">
+            @if (seclst != null)
+            {
+                foreach (var item in seclst)
+                {
+                    <div class="col-md-3 col-sm-12">
+                        <div class="card card-bg-blue">
+                            <div class="card-title">
+                            </div>
+                            <div class="card-body">
+                                <a href="~/Admin/VWAdminCIS?FMTID=@(item.FMTID.ToString())"><span class="card-title">@item.FNAME</span></a>
+                                <br />
+                                <span class="card-title">कुल पंजीकरण :-</span>
+                                <span class="card-title">@item.FmtRegcnt1</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+

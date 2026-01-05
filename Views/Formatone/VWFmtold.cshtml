@@ -1,0 +1,269 @@
+﻿@model CBCID_APPLICATION.Models.DET_CRIME_FEMALE_CHILDREN;
+@using CBCID_APPLICATION.Models;
+@{
+
+    ViewData["Title"] = "VWFmt";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+    List<CBCID_APPLICATION.Models.VW_DET_CRIME_FEM_CHILD> RST = ViewBag.FmtLst;
+    int i = 1;
+}
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<div class="row">
+    <div class="col-md-2 p-b-20 pb-3">
+        <a class="btn btn-outline-warningg btn-info" href="~/Dashboard"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-8 text-center">
+
+        <h4 class="page-title text-bold"><strong class="title-box">महिलाओं तथा बच्चों से संबंधित अपराधों का विवरण  </strong></h4>
+    </div>
+    <div class="col-md-2 text-right p-b-20 pb-3">
+        <a class="btn btn-outline-warning " asp-action="FmtInsertUpdate" asp-controller="Formatone">Create New &nbsp;<i class="fa fa-plus"></i></a>
+    </div>
+
+
+</div>
+<div class="container-fluid">
+    <form asp-action="VWFmt" asp-controller="Formatone" method="get">
+
+        <div class="col-md-12 text-right p-b-20">
+            @* <input type="hidden" value="@ViewBag.mafiaregid" id="Mafiaid"
+                   name="Mafiaid" /> *@
+        </div>
+
+        <div class="card card-primary bg-primary-gradient mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label> संबंधित अपराधों का विवरण </label>
+                            <select asp-for="FMTID" class="form-control" asp-items="@ViewBag.FMTID">
+                                <option selected disabled>---संबंधित अपराधों का विवरण---</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> सी बी सं० </label>
+                            <input class="form-control" type="text" name="SCBCID" id="SCBCID" placeholder="सी बी सं०" value="" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label> मु० अ० सं० </label>
+                            <input class="form-control" type="text" name="SApradhNo" id="WadhNo" placeholder="मु० अ० सं०" value="" />
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                    <div class="col-md-4 col-md-12">
+                        <button class="btn btn-primary btn-md pull-right" type="submit"><i class="fa fa-search"></i> खोजें</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</br>
+<div class="row">
+    <button class="btn  btn-md bg-lo-warning   text-black  text-center p-l-10 shadow" id="btnExport" name="btnExport" type="button"><strong><i class="fa fa-download"></i>&nbsp; Download Excel </strong><div class="ripple-container"></div></button>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card p-3">
+            <div class=" card-data-tables product-table-wrapper m-t-0">
+                <div class="card-body p-2">
+
+                    <div id="scrollContainer" class="table-responsive w-100">
+                        <table id="productsTable" name="productsTable" class="mdl-data-table product-table m-t-30 table-head-bg" border="1" cellspacing="0" width="100%">
+                            <thead class="table-head-border bg-info text-white text-center">
+                                <tr>
+                                    <th class="table-head-bg">क्र० सं० </th>
+                                    <th class="table-head-bg">संबंधित अपराधों का प्रकार  </th>
+                                    <th class="table-head-bg">
+                                        खण्ड
+                                    </th>
+                                    <th class="table-head-bg">जनपद </th>
+                                    <th class="table-head-bg">सी बी सं० </th>
+                                    <th class="table-head-bg">मु० अ० सं० </th>
+                                    <th class="table-head-bg" style="width:175px;">धारा </th>
+                                    <th class="table-head-bg">थाना  </th>
+                                    <th class="table-head-bg">बनाम(अपराधी का नाम) </th>
+                                    <th class="table-head-bg" style="width:190px;">न्याया० का नाम /  सी एन आर  </th>
+                                    <th class="table-head-bg">आरोप पत्र दाखिल करने की तिथि </th>
+                                    <th class="table-head-bg">आरोप पत्र विरचन की तिथि </th>
+                                    <th class="table-head-bg">जाँच अधिकारी का नाम   </th>
+                                    <th class="table-head-bg">जाँच अधिकारी का फोन नंबर  </th>
+                                    <th class="table-head-bg">अद्यतन स्थिति   </th>
+                                    <th class="table-head-bg">अग्रिम नियत तिथि   </th>
+                                    <th class="table-head-bg">अभ्युक्ति    </th>
+                                    <th align="center">View</th>
+                                    <th class="table-head-bg">Action    </th>
+                                    <th class="table-head-bg">Add Gavaha</th>
+                                    <th class="table-head-bg">View Gavaha</th>
+                                    <th class="table-head-bg">Add Sunvahi</th>
+                                    <th class="table-head-bg">View Sunvahi</th>
+                                </tr>
+                            </thead>
+                            @foreach (var RS in RST)
+                            {
+                                <tr class="Data  text-center">
+                                    <td>@i</td>
+                                    <td>@RS.FmtName</td>
+                                    <td>@RS.Sname</td>
+                                    <td>@RS.dname</td>
+                                    <td>@RS.cbcidno</td>
+                                    <td>@RS.APRADHNO</td>
+                                    <td>@RS.ACT</td>
+                                    <td>@RS.THANA</td>
+                                    <td>@RS.BNAME</td>
+                                    <td>@RS.COURT</td>
+                                    <td>@RS.DAKILDATE</td>
+                                    <td>@RS.ARROPVICHARANTHITHI</td>
+                                    <td>@RS.PSHAKSHI_NAME</td>
+                                    <td>@RS.RSHAKSHI_NAME</td>
+                                    <td>@RS.ADATHAN_STATUS</td>
+                                    <td>@RS.NEXT_HEARING_DATE</td>
+                                    <td>@RS.ABHIYUKT</td>
+                                    <td align="center">
+                                        @if (RS.DCFCID != 0)
+                                        {
+                                            <ul class="nav nav-pills nav-primary ico-size text-center">
+                                                @if (RS.DCFCID > 0)
+                                                {
+                                                    <li align="center">
+                                                        <a href="#" class="clsview" encid="@RS.DCFCID" data-toggle="modal" class="nav-link "><i class="fa fa-eye fa-2x"></i></a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </td>
+                                    <td align="center">
+
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/Formatone/FmtInsertUpdate?DCFCID=@(RS.DCFCID.ToString())" class="xbtn xbtn-primary text-success"><i class="fa fa-edit"></i> </a>
+                                        }
+                                    </td>
+                                    <td align="center">
+
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/AddGavaha/INSERTUPDATEGAVAHA?DCFCID=@(RS.DCFCID.ToString())" class="btn btn-outline-light text-info">
+                                                <strong class=""><i class="fa fa-plus d-block"></i> </strong></a>
+                                        }
+                                    </td>
+                                    <td align="center">
+
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/AddGavaha/VWGAVAHA?DCFCID=@(RS.DCFCID.ToString())&gavahaid=0" class="btn btn-outline-light text-info">
+                                                <strong class=""><i class="fa fa-plus d-block"></i> </strong>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td align="center">
+
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/Sunvahi/INSERTUPDATESUNVAHI?DCFCID=@(RS.DCFCID.ToString())" class="btn btn-outline-light text-info">
+                                                <strong class=""><i class="fa fa-plus d-block"></i> </strong>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td align="center">
+
+                                        @if (@RS.DCFCID != 0)
+                                        {
+                                            <a href="/Sunvahi/VWSUNVAHI?DCFCID=@(RS.DCFCID.ToString())" class="btn btn-outline-light text-info">
+                                                <strong class=""><i class="fa fa-plus d-block"></i> </strong>
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigdata modal-xl" role="document">
+        <div class="modal-content" style="box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -webkit-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); -moz-box-shadow: 1px 5px 36px -3px rgba(0,0,0,0.75); ">
+            <div class="modal-content bg-white">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="RequestModalLabel">महिलाओं तथा बच्चों से संबंधित अपराधों का विवरण   </h5>
+                </div>
+                <div class="modal-body" id="idModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button id='closeModal' type="button" class="btn btn-danger" data-bs-dismiss="modal">Close/बंद करे</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="../assets/bundles/libscripts.bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+
+                let table = $("#productsTable");
+                TableToExcel.convert(table[0], {
+                    name: `Appradh_ka_Vivaran.xlsx`,
+                    sheet: {
+                        name: 'Appradh'
+                    }
+                });
+            });
+            $('.clsview').click(function (event) {
+                event.preventDefault();
+                $('#RequestModal').show();
+                $("#idModalBody").html('');
+                var id = $(this).attr("encid");
+                $.ajax({
+                    type: "GET",
+                    url: "/Common/FetchFormatone",
+                    data: { 'encid': id },
+                    success: function (response) {
+
+                        $("#idModalBody").html(response);
+                        $(document).find('#RequestModal').modal("show");
+                        $('#RequestModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
